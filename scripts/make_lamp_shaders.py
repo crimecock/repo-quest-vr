@@ -19,8 +19,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent / "lib"))
 from paths import WORK  # noqa: E402
 
-UNITY_VERSION = "2022.3.62f3"
-UNITY_REVISION = "96770f904ca7"
+UNITY_VERSION = "6000.3.17f1"  # R.E.P.O. 0.5.0 is a Unity 6.3 game
+UNITY_REVISION = "cf0352b38e81"
 SOURCE = WORK / "downloads" / "builtin_shaders" / "src"
 
 # name in the project -> (Unity source file, shader name, GUID of our copy)

@@ -31,16 +31,26 @@ CACHE = WORK / "packages"
 BUILTIN_PACKAGES = builtin_packages()
 
 # package, version, DLLs in Assets/Plugins it replaces (versions read from the game's DLLs)
+# R.E.P.O. 0.5.0 (Unity 6000.3.17f1). Matched against the game's DLLs (type sets against each
+# version's sources from github.com/needle-mirror, plus what tells close versions apart):
+#   Input System 1.19.0   the DLL's assembly version
+#   uGUI 2.0.0            Unity 6's built-in uGUI, TextMeshPro included (Unity.TextMeshPro.dll and its engine bridge 004)
+#   Localization 1.5.12   1.5.13 added a HelpURL to Locale, the game's DLL has none
+#   Addressables 2.9.1    StreamingAssets/aa/settings.json, m_AddressablesVersion; SBP 2.6.1 and Profiling Core
+#                         1.0.2 are its dependencies (both also in Plugins as DLLs)
+#   Newtonsoft 3.2.1      same Newtonsoft.Json.dll (AOT) byte for byte
+#   PostProcessing 3.5.4  Monitor and ParameterOverride are [Serializable] only from 3.5.4
+#   Mathematics 1.3.2     1.3.x (AffineTransform, svd); 1.3.1-1.3.3 have the same sources
 PACKAGES = [
-    ("com.unity.inputsystem", "1.14.2", ["Unity.InputSystem", "Unity.InputSystem.ForUI"]),
-    ("com.unity.ugui", "1.0.0", ["UnityEngine.UI"]),
-    ("com.unity.textmeshpro", "3.0.7", ["Unity.TextMeshPro"]),
-    ("com.unity.localization", "1.5.9", ["Unity.Localization", "Unity.InternalAPIEngineBridge.013"]),
-    ("com.unity.addressables", "1.27.0", ["Unity.Addressables", "Unity.ResourceManager"]),
-    ("com.unity.scriptablebuildpipeline", "1.23.0", ["Unity.ScriptableBuildPipeline"]),
-    ("com.unity.nuget.newtonsoft-json", "3.0.2", ["Newtonsoft.Json"]),
-    ("com.unity.postprocessing", "3.5.0", ["Unity.Postprocessing.Runtime"]),
-    ("com.unity.mathematics", "1.2.6", ["Unity.Mathematics"]),
+    ("com.unity.inputsystem", "1.19.0", ["Unity.InputSystem", "Unity.InputSystem.ForUI"]),
+    ("com.unity.ugui", "2.0.0", ["UnityEngine.UI", "Unity.TextMeshPro", "Unity.InternalAPIEngineBridge.004"]),
+    ("com.unity.localization", "1.5.12", ["Unity.Localization", "Unity.InternalAPIEngineBridge.013"]),
+    ("com.unity.addressables", "2.9.1", ["Unity.Addressables", "Unity.ResourceManager"]),
+    ("com.unity.scriptablebuildpipeline", "2.6.1", ["Unity.ScriptableBuildPipeline"]),
+    ("com.unity.profiling.core", "1.0.2", ["Unity.Profiling.Core"]),
+    ("com.unity.nuget.newtonsoft-json", "3.2.1", ["Newtonsoft.Json"]),
+    ("com.unity.postprocessing", "3.5.4", ["Unity.Postprocessing.Runtime"]),
+    ("com.unity.mathematics", "1.3.2", ["Unity.Mathematics"]),
 ]
 
 # python.org builds ship without a CA store

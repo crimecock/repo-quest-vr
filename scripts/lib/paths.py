@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 WORK = Path(os.environ.get("REPOQUEST_WORK") or ROOT / "work")
 GAME = Path(os.environ.get("REPOQUEST_GAME") or WORK / "game")
-UNITY_EDITOR = Path(os.environ.get("REPOQUEST_UNITY_EDITOR") or "/Applications/Unity/Hub/Editor/2022.3.62f3")
+UNITY_EDITOR = Path(os.environ.get("REPOQUEST_UNITY_EDITOR") or "/Applications/Unity/Hub/Editor/6000.3.17f1")
 
 TOOL_PROJECTS = {"assembly-renamer": "AssemblyRenamer"}
 

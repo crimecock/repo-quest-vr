@@ -114,9 +114,10 @@ namespace RepoXR.Standalone
     }
 
     /// <summary>
-    /// A text entry page, made from the game's "rename save file" page: a header, one text field with RepoXR's VR
-    /// keyboard under the menu, and two buttons. The page's own component (which would rename a save file) and its
-    /// localized texts are removed. <see cref="Show"/> can reuse the page for the next field, so the keyboard stays.
+    /// A text entry page, made from the game's text prompt page (R.E.P.O. 0.5.0: MenuPagePopUpTextInput, which replaced
+    /// the "rename save file" page): a header, one text field with RepoXR's VR keyboard under the menu, and two buttons.
+    /// The page's own component (which would answer the game's prompt) and its localized texts are removed.
+    /// <see cref="Show"/> can reuse the page for the next field, so the keyboard stays.
     /// </summary>
     internal sealed class MenuTextPage : MonoBehaviour
     {
@@ -145,22 +146,25 @@ namespace RepoXR.Standalone
         {
             if (!MenuManager.instance || !MenuManager.instance.currentMenuPage)
                 return null;
-            var page = MenuManager.instance.PageOpenOnTop(MenuPageIndex.SavesRename);
+            var page = MenuManager.instance.PageOpenOnTop(MenuPageIndex.PopUpTextInput);
 
-            // Now, before any Start of the new page runs: the rename logic, and localized texts that would replace ours
-            DestroyImmediate(page.GetComponent<MenuPageSavesRename>());
-            foreach (var localized in page.GetComponentsInChildren<LocalizationChangedEvent>(true))
-                DestroyImmediate(localized);
-
+            // Now, before any Start of the new page runs: the prompt's logic, and localized texts that would replace ours
+            var prompt = page.GetComponent<MenuPagePopUpTextInput>();
             var textPage = page.gameObject.AddComponent<MenuTextPage>();
             textPage.page = page;
-            textPage.input = page.GetComponentInChildren<MenuTextInput>(true);
-            textPage.header = page.transform.Find("Header/Text")?.GetComponent<TextMeshProUGUI>();
-            textPage.confirmButton = page.transform.Find("Menu Element Button Group/Menu Button - Confirm")?.GetComponent<MenuButton>();
-            textPage.backButton = page.transform.Find("Menu Element Button Group/Menu Button - Back")?.GetComponent<MenuButton>();
+            textPage.input = prompt ? prompt.menuTextInput : page.GetComponentInChildren<MenuTextInput>(true);
+            textPage.header = page.menuHeader;
+            textPage.confirmButton = prompt ? prompt.confirmButton : null;
+            textPage.backButton = prompt ? prompt.backButton : null;
+            if (prompt && prompt.bodyTextMesh)
+                prompt.bodyTextMesh.text = "";
+            if (prompt)
+                DestroyImmediate(prompt);
+            foreach (var localized in page.GetComponentsInChildren<LocalizationChangedEvent>(true))
+                DestroyImmediate(localized);
             if (!textPage.input || !textPage.header || !textPage.confirmButton || !textPage.backButton)
             {
-                Debug.LogWarning("[RepoXR.Standalone] the game's rename page changed; no text page for the Steam login");
+                Debug.LogWarning("[RepoXR.Standalone] the game's text prompt page changed; no text page for the Steam login");
                 textPage.Close();
                 return null;
             }
@@ -231,7 +235,7 @@ namespace RepoXR.Standalone
             // The keys the game's own text pages answer to; not while a popup is on top
             if (MenuManager.instance.currentMenuPage == page)
             {
-                if (SemiFunc.InputDown(InputKey.Confirm))
+                if (SemiFunc.InputDown(InputKey.UIClick))
                     Choose(1);
                 else if (SemiFunc.InputDown(InputKey.Back))
                     Choose(2);

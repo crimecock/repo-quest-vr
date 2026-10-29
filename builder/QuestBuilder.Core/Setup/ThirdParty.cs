@@ -87,7 +87,11 @@ public sealed class ThirdParty
     {
         var pin = pins.BuiltinShaders;
         var archive = Path.Combine(workspace.Downloads, $"builtin_shaders-{pin.Version}.zip");
-        await Downloader.DownloadAsync(pin.Url, archive, pin.Sha256, Report("builtin shaders"), ct);
+        // Unity 6000.3.17f1's archive is not pinned yet (no hash to check against), it comes from Unity's CDN
+        var sha = string.IsNullOrEmpty(pin.Sha256) ? null : pin.Sha256;
+        await Downloader.DownloadAsync(pin.Url, archive, sha, Report("builtin shaders"), ct);
+        if (sha is null)
+            Log.Info($"builtin shaders {pin.Version}: SHA-256 {Hashing.Sha256File(archive)} (not pinned)");
     }
 
     private async Task<string> ToolAsync(string name, string version, PinnedFile file, CancellationToken ct)

@@ -16,7 +16,22 @@ public sealed class GameInstall
     public string Data => System.IO.Path.Combine(Path, "REPO_Data");
     public string Managed => System.IO.Path.Combine(Data, "Managed");
     public string AssemblyCSharp => System.IO.Path.Combine(Managed, "Assembly-CSharp.dll");
-    public string AddressablesCatalog => System.IO.Path.Combine(Data, "StreamingAssets", "aa", "catalog.json");
+    /// <summary>
+    /// The player's Addressables catalog. R.E.P.O. 0.5.0 (Addressables 2.9.1) loads the binary
+    /// catalog.bin (settings.json names it); the catalog.json next to it is a leftover of an older build
+    /// </summary>
+    public string AddressablesCatalog
+    {
+        get
+        {
+            var aa = System.IO.Path.Combine(Data, "StreamingAssets", "aa");
+            var binary = System.IO.Path.Combine(aa, "catalog.bin");
+            var settings = System.IO.Path.Combine(aa, "settings.json");
+            return File.Exists(binary) && (!File.Exists(settings) || File.ReadAllText(settings).Contains("catalog.bin"))
+                ? binary
+                : System.IO.Path.Combine(aa, "catalog.json");
+        }
+    }
 
     public static bool IsValid(string? path) =>
         !string.IsNullOrEmpty(path) && File.Exists(System.IO.Path.Combine(path, "REPO_Data", "Managed", "Assembly-CSharp.dll"));
