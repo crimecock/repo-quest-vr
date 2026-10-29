@@ -1,78 +1,79 @@
-# R.E.P.O. VR on Quest 2, Quest 3 and Pico 4, standalone
+# R.E.P.O. VR on Quest, standalone — R.E.P.O. 0.5.0 (Unity 6) port
 
-Play [R.E.P.O.](https://store.steampowered.com/app/3241660/REPO/) in VR on a Meta Quest 2, Quest 3 or Pico 4 without a PC,
-and join your friends' games on PC. Their game stays vanilla, with no mods.
+**English** · [Русский](README.ru.md)
+
+This is a fork of **[repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr)** by [Dobutsu](https://github.com/Dobutsu),
+which runs [R.E.P.O.](https://store.steampowered.com/app/3241660/REPO/) in VR on a Meta Quest without a PC, built on
+**[RepoXR](https://github.com/DaXcess/RepoXR)** by [DaXcess](https://github.com/DaXcess).
+
+The original port (1.0.7) supports R.E.P.O. **0.4.4.3**, which ran on Unity 2022.3. Steam now ships R.E.P.O. **0.5.0**,
+which moved to **Unity 6000.3**, and the original builder stops at the export step. This fork carries the whole port
+over to 0.5.0 and adds a few performance options.
+
+> **Status: testing.** The pipeline builds a 0.5.0 APK end to end; testing on a real Quest 3 is in progress. Report
+> problems with this fork [here](../../issues), not to Dobutsu or DaXcess.
 
 The game is built **from your own copy of R.E.P.O.** on Steam. This repository and its releases contain no game files.
+**Do not share the APK** you build: it contains the game's files.
 
-Support me if you want: [ko-fi.com/dobutsu](https://ko-fi.com/dobutsu)
+## What this fork changes
 
-## Built on RepoXR by DaXcess
+**R.E.P.O. 0.5.0 support**
+- **RepoXR** ([`patches/repoxr/0009-repo-0.5.0.patch`](patches/repoxr/0009-repo-0.5.0.patch), on top of RepoXR 1.2.3
+  and the port's patches 0001–0008): 0.5.0 renamed or moved much of what RepoXR patches (new overloads, the text
+  prompt page, `KeyType`, vehicle and snow bike heading, glyph tags, climbing). Menus now click through
+  `InputKey.UIClick`, which is answered by the VR pointer's trigger.
+- **Builder and Unity**: Unity 6000.3.17f1; AssetRipper's nested export folder; player settings that AssetRipper cannot
+  read from 0.5.0 are restored from the game's `globalgamemanagers` (gamma colour space, both input handlers, preloaded
+  Input System and Localization settings).
+- **Packages** matched to the game's DLLs: Input System 1.19.0, uGUI 2.0.0 (TextMeshPro included), Localization 1.5.12,
+  Addressables 2.9.1, PostProcessing 3.5.4 and others.
+- **Addressables 2.x binary catalog** (`catalog.bin`) decoder, so cosmetics and all languages are rebuilt for Android.
+- **Audio**: AssetRipper 2.0.0 writes every WAV with zero chunk sizes, which Unity 6 cannot decode; the headers are fixed.
+- **SteamShim**: the Steam APIs 0.5.0 calls on startup and in lobbies (`SteamApps.CurrentBetaName`, achievement
+  progress, gamepad text input).
+- **In-headset Steam login** uses 0.5.0's text prompt page.
 
-This port is built on **[RepoXR](https://github.com/DaXcess/RepoXR)** by **[DaXcess](https://github.com/DaXcess)**,
-who also made [LCVR](https://github.com/DaXcess/LCVR), the VR mod for Lethal Company. RepoXR provides all of the VR:
+**Performance** (the game is CPU-bound on the Quest)
+- **Level culling**: small objects beyond 20 m and everything hidden by the fog are not drawn. Rendering only —
+  objects keep running, multiplayer is unaffected. Settings in the game: *Settings → VR Settings → Rendering*
+  (Level Culling, Small Object Distance, Room Distance).
+- **IL2CPP Master** code generation.
+- **CPU and GPU at SUSTAINED_HIGH** from the start of every session (`XR_EXT_performance_settings`).
 
-- head and hand tracking and motion controls;
-- VR menus, HUD and keyboard;
-- the physical grabbing that R.E.P.O. is built around;
-- support for VR players and flatscreen players in the same lobby.
+Details: [`docs/repo-0.5.0.md`](docs/repo-0.5.0.md). Controls: [`docs/controls.md`](docs/controls.md).
 
-This project does not add VR. It takes RepoXR as it is and makes it run on the headset itself:
+## How to build
 
-- bakes it into the game;
-- builds the game for Android;
-- adds what a PC normally provides, a Steam client and voice chat.
+You need R.E.P.O. 0.5.0 on Steam, **Unity 6000.3.17f1** with Android Build Support (OpenJDK, Android SDK & NDK), the
+.NET 8 SDK, about 60 GB of free disk space and a Quest in developer mode with a USB cable.
 
-If you enjoy R.E.P.O. in VR, star [RepoXR](https://github.com/DaXcess/RepoXR), get it on
-[Thunderstore](https://thunderstore.io/c/repo/p/DaXcess/RepoXR) for PC VR, and say thanks on the
-[RepoXR Discord](https://discord.gg/2DxNgpPZUF).
+### macOS
 
-**Please do not report problems with this port to RepoXR or DaXcess.** Open an issue here instead. This is an
-unofficial project that DaXcess does not maintain or endorse. The port's own changes to RepoXR, such as the head bob
-slider and lighting and performance options, live in [`patches/repoxr`](patches/repoxr). They are free for RepoXR to take
-if any of them are useful.
+```bash
+git clone https://github.com/crimecock/repo-quest-vr.git
+cd repo-quest-vr
+bash scripts/build-mac.sh
+```
 
-## What works
+The script downloads the kit from this fork's [Releases](../../releases), the game through `steamcmd` (it asks for your
+Steam login once; the password goes only to Steam), builds the builder and the APK, and installs it on the headset.
+The first build takes 1–1.5 hours. Use `GAME=/path/to/REPO` for a copy you already have, `--no-install` to build only.
 
-- **VR on the headset.** RepoXR's full feature set runs at the Quest 3's 72 Hz, using single-pass (multiview)
-  rendering and lighting tuned for the mobile GPU. Most levels hold 55–72 FPS. Shops and crowded lobbies dip lower.
-- **Singleplayer**, including the tutorial and saves.
-- **Joining friends on PC.** You can join from the friends list or accept an invite inside the headset. Voice chat works
-  both ways. Tested with up to 7 players on vanilla PC copies of the game.
+### Windows (or any OS with .NET 8)
 
-Hosting a game from the headset has not been tested yet. The port is made and tested on a Quest 3. The Quest 3S
-should behave the same. The **Quest 2** runs the same build: tested in singleplayer, where it holds 72 FPS in
-most places and drops to 30–60 in the shop (its GPU is the Pico 4's, and slower). Quest Pro is untested.
+The original Windows builder app embeds the 1.0.7 kit and cannot build 0.5.0. Use the command-line builder from this
+repository with the kit from [Releases](../../releases):
 
-**Pico 4** and **Pico 4 Ultra** work too: tested on both, and on the Pico 4 also in multiplayer with friends on PC.
-The builder makes the Quest version and converts it with [ovrport](https://github.com/ovrport/app), which swaps the
-OpenXR loader for one that runs on Pico and maps the controllers. Two things are different on Pico: on the first start
-on a Pico 4 the game brings its graphics in one by one for about a minute ("Preparing graphics"), because the Pico 4 GPU
-hangs when the main menu draws everything at once (the Ultra does not need it); and the game asks for the microphone in
-the main menu rather than at startup, where the permission prompt crashed it. See [`docs/pico.md`](docs/pico.md).
+```
+dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <unzipped kit> --game <folder with REPO_Data> --workspace <work folder> --unity <Unity 6000.3.17f1 folder> --headset quest
+```
 
-## How to get it
+## Steam in the headset
 
-Download **RepoQuestBuilder** for Windows from [Releases](../../releases/latest) and follow its `README.txt`. In short:
-
-1. You need Windows 10/11 (64-bit), 16 GB RAM, about 60 GB of free disk space, R.E.P.O. on Steam, a Quest 2, Quest 3 or
-   Pico 4 in developer mode with a USB cable, and a free Unity account. Pick the headset in the builder; Quest is the
-   default.
-2. The builder finds your game and downloads everything else itself: Unity 2022.3, AssetRipper and Python packages,
-   each from its original source with a pinned SHA-256. It then builds the APK on your PC.
-3. The first build takes 1–1.5 hours on a fast computer and 3–5 hours on a slower one: Unity compiles the game's
-   shaders and data once. Later updates take 20 minutes to an hour.
-4. It installs the APK on the headset. The game appears in the Library under *Unknown Sources*.
-5. To remove it all later, click **Uninstall…** in the builder.
-
-**Do not share the APK.** It contains the game's files. Everyone builds their own from their own copy.
-
-### Steam in the headset: read this
-
-To play online, you log in to Steam inside the game, from the **Steam** button in the main menu. The headset then
-talks to Steam directly through [SteamKit2](https://github.com/SteamRE/SteamKit), an unofficial Steam client. Steam's
-Subscriber Agreement does not allow third-party clients. The risk to your account is small, but it is real, so decide
-for yourself. The login goes from the headset straight to Steam, and the builder never sees your password.
+To play online, you log in to Steam inside the game, from the **Steam** button in the main menu. The headset then talks
+to Steam directly through [SteamKit2](https://github.com/SteamRE/SteamKit), an unofficial Steam client. Steam's
+Subscriber Agreement does not allow third-party clients. The risk to your account is small, but it is real.
 Singleplayer works without logging in.
 
 ## How it works
@@ -81,43 +82,34 @@ Singleplayer works without logging in.
 your R.E.P.O. (Steam)
   └─ AssetRipper ──────────► Unity project (the game's scenes, prefabs, scripts as DLLs)
   └─ HarmonyBaker ─────────► RepoXR's Harmony patches baked into the game's assemblies (no runtime patching on IL2CPP)
-  └─ scripts/ (Python) ────► fixes for the export: shaders rewritten for mobile and multiview, Addressables, halos
-  └─ Unity 2022.3 (IL2CPP, OpenXR, Vulkan) ─► Android APK ─► Quest
-                                                         └─ ovrport ─► Pico
+  └─ scripts/ (Python) ────► fixes for the export: shaders, Addressables, audio, packages, halos
+  └─ Unity 6000.3 (IL2CPP, OpenXR, Vulkan) ─► Android APK ─► Quest
 ```
 
-- `builder/` is the Windows builder (Avalonia app plus a CLI) and runs the whole pipeline. See `docs/builder.md`.
-- `tools/RepoXR.Standalone` starts RepoXR without BepInEx and adds the in-headset Steam login and invites.
-- `tools/SteamShim` replaces Facepunch.Steamworks with a SteamKit2 backend: lobbies, auth tickets for Photon, friends.
-- `tools/HarmonyBaker`, `tools/AssemblyRenamer` and `tools/Il2CppFixes` make the Mono mod work under IL2CPP.
-- `patches/repoxr` holds the changes to RepoXR. `unity-tools/` holds the Unity editor and runtime helpers.
-- `docs/` contains the design notes: `feasibility.md` (how the port came together), `builder.md` (the builder and
-  releases), `public-release.md` (the legal side) and `shader-gallery.md` (checking our shaders against the PC game).
-
-Development happens on a Mac with the same pipeline (`scripts/build.sh`). The Windows builder is the supported way for
-players.
+See the original project's design notes in [`docs/`](docs) ([`feasibility.md`](docs/feasibility.md),
+[`builder.md`](docs/builder.md)); they describe the 0.4.4.3 / Unity 2022.3 port, and
+[`docs/repo-0.5.0.md`](docs/repo-0.5.0.md) what changed for 0.5.0.
 
 ## Legal
 
 This is an unofficial fan project. It is not affiliated with or endorsed by semiwork (R.E.P.O.), DaXcess (RepoXR),
-Valve or Meta. R.E.P.O. and its assets belong to semiwork. The repository contains only the port's own code. Every
-player builds the game from a copy they own.
+Dobutsu, Valve or Meta. R.E.P.O. and its assets belong to semiwork. The repository contains only the port's own code.
+Every player builds the game from a copy they own.
 
-Licensed under the **GNU GPL v3.0** (see [LICENSE](LICENSE)), the same license as RepoXR, which the port includes and
-modifies. Third-party components and their licenses are listed in [`builder/SOURCES.md`](builder/SOURCES.md) and
+Licensed under the **GNU GPL v3.0** (see [LICENSE](LICENSE)), like the original port and RepoXR. Third-party components
+are listed in [`builder/SOURCES.md`](builder/SOURCES.md) and
 [`builder/release/THIRD-PARTY-NOTICES.txt`](builder/release/THIRD-PARTY-NOTICES.txt).
 
 ## Credits
 
+- **[Dobutsu](https://github.com/Dobutsu)**: [repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr), the standalone
+  Quest port this fork is based on ([ko-fi](https://ko-fi.com/dobutsu)).
 - **[DaXcess](https://github.com/DaXcess)**: [RepoXR](https://github.com/DaXcess/RepoXR) and
-  [RepoXR-Unity](https://github.com/DaXcess/RepoXR-Unity), the VR mod this port is built on.
+  [RepoXR-Unity](https://github.com/DaXcess/RepoXR-Unity), the VR mod everything is built on.
 - **semiwork**: [R.E.P.O.](https://store.steampowered.com/app/3241660/REPO/)
 - [SteamKit2](https://github.com/SteamRE/SteamKit), [AssetRipper](https://github.com/AssetRipper/AssetRipper),
-  [BepInEx](https://github.com/BepInEx/BepInEx) and [HarmonyX](https://github.com/BepInEx/HarmonyX),
-  [Avalonia](https://github.com/AvaloniaUI/Avalonia), [Opus](https://opus-codec.org/) and
-  [ovrport](https://github.com/ovrport/app) (Pico).
-- Port by **[Dobutsu](https://github.com/Dobutsu)**.
-
-**Made with AI.** Most of the code, scripts and documentation here were written by
-[Claude Code](https://claude.com/claude-code), Anthropic's AI coding agent, under Dobutsu's direction. Every build
-was tested by people on a real Quest 3, including multiplayer with friends on PC.
+  [BepInEx](https://github.com/BepInEx/BepInEx), [HarmonyX](https://github.com/BepInEx/HarmonyX),
+  [Opus](https://opus-codec.org/), and the [needle-mirror](https://github.com/needle-mirror) package mirrors used to
+  match package versions.
+- 0.5.0 port by **[crimecock](https://github.com/crimecock)**, made with
+  [Claude Code](https://claude.com/claude-code).

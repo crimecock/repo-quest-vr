@@ -21,3 +21,7 @@ UserSettings/
 
 # Python
 __pycache__/
+
+# .NET intermediate output and Python caches
+obj/
+__pycache__/
