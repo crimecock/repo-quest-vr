@@ -21,9 +21,9 @@ set -euo pipefail
 trap 'echo "build_repoquest.sh stopped at line $LINENO" >&2' ERR
 
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
-VERSION=1.0.7-qc1
+VERSION=1.0.7-qc2
 KIT_URL="${KIT_URL:-https://github.com/crimecock/repo-quest-vr/raw/kit/repoquest-kit-$VERSION.zip}"
-KIT_SHA="${KIT_SHA:-99c05912e15f7b301db4319d8215d4c8f97cdde0c333be5f266d33e9462bb3a7}"
+KIT_SHA="${KIT_SHA:-79c4e20663c6981981942be81cbf2c67787b05e5e6054bcb5a30b94787317a32}"
 BASE="${REPOQUEST_HOME:-$HOME/RepoQuest}"
 GAME="${GAME:-$BASE/game}"
 UNITY_VERSION=6000.3.17f1

@@ -28,11 +28,11 @@ param(
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"   # Invoke-WebRequest is many times slower with the progress bar
 
-$Version = "1.0.7-qc1"
+$Version = "1.0.7-qc2"
 $UnityVersion = "6000.3.17f1"
 $UnityChangeset = "cf0352b38e81"
 $KitUrl = "https://github.com/crimecock/repo-quest-vr/raw/kit/repoquest-kit-$Version.zip"
-$KitSha = "99c05912e15f7b301db4319d8215d4c8f97cdde0c333be5f266d33e9462bb3a7"
+$KitSha = "79c4e20663c6981981942be81cbf2c67787b05e5e6054bcb5a30b94787317a32"
 $Src = Split-Path -Parent $PSScriptRoot
 
 function Say($text) { Write-Host "`n== $text" -ForegroundColor Cyan }
