@@ -6,6 +6,7 @@ using Mono.Cecil.Cil;
 //   IlCheck diff <original> <baked>   per changed method: instruction counts and how much stayed equal at the start/end.
 //                                     A transpiler target that did not change is a patch that silently matched nothing;
 //                                     a change in the last few instructions after an Advance(-N) is suspicious.
+//   IlCheck refs <dll>... [--search <dir>]...   type and member references that do not resolve against the folders
 //   IlCheck types <dll>... [--search <dir>]...  class-typed values stored into locals/fields and `this` of calls,
 //                                     against their declared types (IL2CPP's C++ is typed, clang rejects mismatches)
 if (args.Length >= 2 && args[0] == "stack")
@@ -24,12 +25,12 @@ if (args.Length >= 2 && args[0] == "stack")
     Console.WriteLine($"{total} methods, {bad} with stack errors");
     return bad == 0 ? 0 : 1;
 }
-if (args.Length >= 2 && args[0] == "types")
+if (args.Length >= 2 && args[0] is "types" or "refs")
 {
     var dlls = new List<string>(); var dirs = new List<string>();
     for (var k = 1; k < args.Length; k++)
         if (args[k] == "--search" && k + 1 < args.Length) dirs.Add(args[++k]); else dlls.Add(args[k]);
-    return TypeCheck.Run(dlls, dirs);
+    return args[0] == "types" ? TypeCheck.Run(dlls, dirs) : RefCheck.Run(dlls, dirs);
 }
 if (args.Length == 3 && args[0] == "diff")
 {
@@ -48,7 +49,7 @@ if (args.Length == 3 && args[0] == "diff")
     }
     return 0;
 }
-Console.Error.WriteLine("usage: IlCheck stack <dll>... | IlCheck diff <original.dll> <baked.dll>");
+Console.Error.WriteLine("usage: IlCheck stack <dll>... | diff <original.dll> <baked.dll> | types|refs <dll>... [--search <dir>]...");
 return 2;
 
 static string Text(Instruction i) => i.OpCode.Name + " " + (i.Operand switch

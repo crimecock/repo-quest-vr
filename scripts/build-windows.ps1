@@ -4,13 +4,15 @@ R.E.P.O. 0.5.0 in VR on a Meta Quest, standalone, built on Windows from your own
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -NoInstall
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -Game "D:\SteamLibrary\steamapps\common\REPO"
+    powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -Force   (build even when the check of a new game version finds problems)
 
 What it does (work folder C:\RepoQuest; an ASCII path without spaces, Unity and Gradle break on others):
   1. checks Unity 6000.3.17f1 with Android Build Support (opens Unity Hub on it when it is missing)
   2. .NET 8 SDK into %LOCALAPPDATA%\Microsoft\dotnet (Microsoft's dotnet-install.ps1), if there is none yet
   3. the kit (scripts, Unity tooling, prebuilt RepoXR/SteamShim/Standalone; no game files) from this fork's kit branch,
      checked against its SHA-256
-  4. the builder from this checkout (builder\QuestBuilder.Cli), then the build: AssetRipper export, RepoXR baked into
+  4. the builder from this checkout (builder\QuestBuilder.Cli); a game version the kit was not tested with is checked
+     first (QuestBuilder.Cli check: patches, IL, references, packages; minutes, no Unity); then the build: AssetRipper export, RepoXR baked into
      the game's code, Unity -> APK. The game is found in your Steam libraries (or -Game). First build 1-1.5 hours on a
      fast PC, 3-5 hours on a slower one; about 60 GB of free space
   5. adb install on the headset (USB cable, developer mode)
@@ -18,6 +20,7 @@ Do not share the APK: it contains the game's files.
 #>
 param(
     [switch]$NoInstall,
+    [switch]$Force,
     [string]$Game,
     [string]$Unity = "$env:ProgramFiles\Unity\Hub\Editor\6000.3.17f1",
     [string]$Workspace = "C:\RepoQuest"
@@ -84,9 +87,22 @@ Say "builder (QuestBuilder.Cli)"
 if ($LASTEXITCODE -ne 0) { Die "the builder did not build (see the messages above)" }
 $cli = "$Src\builder\QuestBuilder.Cli\bin\Release\net8.0\QuestBuilder.Cli.exe"
 
+$common = @("--kit", $kit, "--workspace", "$Workspace\work", "--unity", $Unity)
+if ($Game) { $common += @("--game", $Game) }
+# A game version the kit was not tested with: check it first (a few minutes, no Unity) instead of finding out an hour
+# into the build. -Force builds anyway
+& $cli check --quick @common
+if ($LASTEXITCODE -ne 0) {
+    Say "this game version is new to kit ${Version}: checking it first (a few minutes, no Unity)"
+    & $cli check @common
+    if ($LASTEXITCODE -ne 0) {
+        if (-not $Force) { Die "the check found problems with this game version (report: $Workspace\work\check-report.md). Wait for an update of this repository, or add -Force to build anyway" }
+        Write-Host "   -Force: building anyway"
+    }
+}
+
 Say "building the APK (first time 1-1.5 hours or more; logs in $Workspace\work\logs)"
-$buildArgs = @("build", "--kit", $kit, "--workspace", "$Workspace\work", "--unity", $Unity, "--headset", "quest")
-if ($Game) { $buildArgs += @("--game", $Game) }
+$buildArgs = @("build", "--headset", "quest") + $common
 & $cli @buildArgs
 if ($LASTEXITCODE -ne 0) { Die "the build failed (see $Workspace\work\logs\builder.log and unity-build.log)" }
 $apk = Get-ChildItem "$Workspace\work\build\*.apk" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1

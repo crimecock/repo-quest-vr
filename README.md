@@ -23,7 +23,7 @@ The game is built **from your own copy of R.E.P.O.** on Steam. This repository a
   and the port's patches 0001–0008): 0.5.0 renamed or moved much of what RepoXR patches (new overloads, the text
   prompt page, `KeyType`, vehicle and snow bike heading, glyph tags, climbing). Menus now click through
   `InputKey.UIClick`, which is answered by the VR pointer's trigger.
-- **Builder and Unity**: Unity 6000.3.17f1; AssetRipper's nested export folder; player settings that AssetRipper cannot
+- **Builder and Unity**: Unity 6000.3.17f1; player settings that AssetRipper cannot
   read from 0.5.0 are restored from the game's `globalgamemanagers` (gamma colour space, both input handlers, preloaded
   Input System and Localization settings).
 - **Packages** matched to the game's DLLs: Input System 1.19.0, uGUI 2.0.0 (TextMeshPro included), Localization 1.5.12,
@@ -80,6 +80,13 @@ The command-line builder with the unzipped kit from the [`kit` branch](../../tre
 ```
 dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <unzipped kit> --game <folder with REPO_Data> --workspace <work folder> --unity <Unity 6000.3.17f1 folder> --headset quest
 ```
+
+## When R.E.P.O. updates
+
+The build scripts notice a game version the kit was not tested with and check it first, in minutes and without Unity
+(`QuestBuilder.Cli check`): they stop with a report if RepoXR's patches, the Steam client or the packages no longer
+fit. What maintainers do then, and how a release is made: [`docs/updating.md`](docs/updating.md). Releases:
+[`CHANGELOG.md`](CHANGELOG.md).
 
 ## Steam in the headset
 

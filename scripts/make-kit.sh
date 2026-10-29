@@ -53,6 +53,7 @@ for script in "$root"/scripts/*.py; do
     esac
 done
 cp "$root"/scripts/lib/*.py "$kit/scripts/lib/"
+cp "$root/scripts/game_fingerprints.json" "$kit/scripts/"   # check_game.py's baseline (QuestBuilder.Cli check)
 rsync -a --exclude RepoXRAssets --exclude .DS_Store "$root/unity-tools/" "$kit/unity-tools/"
 
 cp "$root/work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll" "$kit/prebuilt/repoxr/"

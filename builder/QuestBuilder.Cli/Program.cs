@@ -7,6 +7,8 @@ using RepoQuest.Builder.Setup;
 //   QuestBuilder.Cli build [--dev] [--workspace <dir>] [--game <dir>] [--kit <dir>] [--unity <dir>]
 //                          [--apk-name <name>] [--development] [--profiling] [--force] [--only <step,...>]
 //                          [--version-name <x.y.z>] [--version-code <n>]
+//   QuestBuilder.Cli check [--quick] [--workspace <dir>] [--game <dir>] [--kit <dir>]
+//                          what a game update broke, without Unity (see CheckCommand); --quick: tested version or not
 //   QuestBuilder.Cli locate                  where the builder finds the game and Unity
 //   QuestBuilder.Cli player-build|update|install   the players' flow without the window (see PlayerCommands)
 //   QuestBuilder.Cli keygen|manifest|sign    release tooling (scripts/release.sh, see ReleaseCommands)
@@ -22,6 +24,7 @@ try
     return args.FirstOrDefault() switch
     {
         "build" => await Commands.BuildAsync(Options.Parse(args[1..])),
+        "check" => await CheckCommand.RunAsync(Options.Parse(args[1..])),
         "locate" => Commands.Locate(Options.Parse(args[1..])),
         "player-build" => await PlayerCommands.BuildAsync(Options.Parse(args[1..])),
         "update" => await PlayerCommands.UpdateAsync(Options.Parse(args[1..]), args[1..]),

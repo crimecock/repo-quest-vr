@@ -33,6 +33,7 @@ internal static class Commands
         Console.WriteLine("usage: QuestBuilder.Cli build [--dev] [--workspace <dir>] [--game <dir>] [--kit <dir>] [--unity <dir>]");
         Console.WriteLine("                              [--apk-name <name>] [--development] [--profiling] [--force] [--only <steps>]");
         Console.WriteLine("                              [--headset quest|pico]");
+        Console.WriteLine("       QuestBuilder.Cli check [--quick] [--workspace <dir>] [--game <dir>] [--kit <dir>] [--unity <dir>]");
         Console.WriteLine("       QuestBuilder.Cli locate");
         return 64;
     }
@@ -103,7 +104,7 @@ internal static class Commands
         return 0;
     }
 
-    private static (Workspace, Kit, string?, string?) Resolve(Options options)
+    internal static (Workspace, Kit, string?, string?) Resolve(Options options)
     {
         string? root = null;
         if (options.Has("dev"))

@@ -15,6 +15,7 @@ public static class ToolHost
         ["harmony-baker"] = "HarmonyBaker",
         ["assembly-renamer"] = "AssemblyRenamer",
         ["il2cpp-fixes"] = "Il2CppFixes",
+        ["il-check"] = "IlCheck",
     };
 
     /// <summary>Called first thing in Main: runs the tool and returns true when the process was started as one</summary>

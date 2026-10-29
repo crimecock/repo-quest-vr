@@ -23,7 +23,7 @@
   патчей порта 0001–0008): в 0.5.0 переименовано или перенесено многое из того, что патчит RepoXR (новые перегрузки,
   страница ввода текста, `KeyType`, руление транспортом и снегоходом, теги глифов, лазание). Клики в меню теперь идут
   через `InputKey.UIClick`, на который отвечает курок VR-луча.
-- **Сборщик и Unity**: Unity 6000.3.17f1; вложенная папка экспорта AssetRipper; настройки плеера, которые AssetRipper
+- **Сборщик и Unity**: Unity 6000.3.17f1; настройки плеера, которые AssetRipper
   не читает из 0.5.0, восстанавливаются из `globalgamemanagers` игры (гамма-цвет, оба обработчика ввода, предзагрузка
   настроек Input System и Localization).
 - **Пакеты** подобраны по DLL игры: Input System 1.19.0, uGUI 2.0.0 (с TextMeshPro), Localization 1.5.12,
@@ -81,6 +81,13 @@ powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 ```
 dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <распакованный набор> --game <папка с REPO_Data> --workspace <рабочая папка> --unity <папка Unity 6000.3.17f1> --headset quest
 ```
+
+## Когда R.E.P.O. обновляется
+
+Скрипты сборки замечают версию игры, с которой набор не проверялся, и сначала проверяют её — за минуты и без Unity
+(`QuestBuilder.Cli check`): если патчи RepoXR, клиент Steam или пакеты больше не подходят, они останавливаются с
+отчётом. Что делать дальше и как выпускается релиз: [`docs/updating.ru.md`](docs/updating.ru.md). Релизы:
+[`CHANGELOG.md`](CHANGELOG.md).
 
 ## Steam в шлеме
 

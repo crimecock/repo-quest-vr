@@ -4,6 +4,7 @@
 #   bash scripts/build-mac.sh                download what is missing, build, install on the headset
 #   bash scripts/build-mac.sh --no-install   build only
 #   GAME=<folder with REPO_Data> bash scripts/build-mac.sh   use a copy of the game you already have
+#   FORCE=1 bash scripts/build-mac.sh        build even when the check of a new game version finds problems
 #
 # What it does (work folder ~/RepoQuest, an ASCII path: Unity and Gradle break on others; REPOQUEST_HOME changes it):
 #   1. .NET 8 SDK into ~/.dotnet (Microsoft's dotnet-install.sh), if there is none yet
@@ -11,7 +12,8 @@
 #      or KIT_ZIP=<zip> for a local one
 #   3. the game: the Windows version of R.E.P.O. from Steam through steamcmd (asks for your Steam login once; your
 #      password goes only to Steam)
-#   4. the builder from this checkout (builder/QuestBuilder.Cli), then the build: AssetRipper export, RepoXR baked into
+#   4. the builder from this checkout (builder/QuestBuilder.Cli); a game version the kit was not tested with is checked
+#      first (QuestBuilder.Cli check: patches, IL, references, packages; minutes, no Unity); then the build: AssetRipper export, RepoXR baked into
 #      the game's code, Unity 6000.3.17f1 -> APK. First build 1-1.5 hours, later ones 20-40 minutes; about 60 GB
 #   5. adb install on the headset (cable, developer mode)
 # Do not share the APK: it contains the game's files.
@@ -105,6 +107,16 @@ say "builder (QuestBuilder.Cli)"
 "$DOTNET_DIR/dotnet" build -c Release -nologo -v quiet "$SRC/builder/QuestBuilder.Cli" | { grep -E " error |warning CS" || true; }
 CLI="$SRC/builder/QuestBuilder.Cli/bin/Release/net8.0/QuestBuilder.Cli"
 [ -x "$CLI" ] || die "the builder did not build (see the messages above)"
+
+# A game version the kit was not tested with: check it first (a few minutes, no Unity) instead of finding out an hour
+# into the build. FORCE=1 builds anyway
+if ! "$CLI" check --quick --kit "$KIT" --game "$GAME" --workspace "$BASE/work" --unity "$UNITY"; then
+    say "this game version is new to kit $VERSION: checking it first (a few minutes, no Unity)"
+    if ! "$CLI" check --kit "$KIT" --game "$GAME" --workspace "$BASE/work" --unity "$UNITY"; then
+        [ "${FORCE:-0}" = 1 ] || die "the check found problems with this game version (report: $BASE/work/check-report.md). Wait for an update of this repository, or FORCE=1 to build anyway"
+        echo "   FORCE=1: building anyway"
+    fi
+fi
 
 say "building the APK (first time about an hour; logs in $BASE/work/logs)"
 caffeinate -i "$CLI" build --kit "$KIT" --game "$GAME" --workspace "$BASE/work" --unity "$UNITY" --headset quest

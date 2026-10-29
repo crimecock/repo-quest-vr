@@ -106,22 +106,6 @@ public sealed partial class ExportStep : BuildStep
             }
         }
 
-        // With R.E.P.O. 0.5.0 (Unity 6.3) AssetRipper 2.0.0 puts the project one folder deeper,
-        // export/<game name>/ExportedProject; move it up to where the next steps expect it
-        if (!ResultExists(context) && Directory.Exists(workspace.Export))
-        {
-            foreach (var nested in Directory.EnumerateDirectories(workspace.Export))
-            {
-                if (!Directory.Exists(Path.Combine(nested, "ExportedProject"))) continue;
-                foreach (var entry in Directory.EnumerateFileSystemEntries(nested))
-                {
-                    var to = Path.Combine(workspace.Export, Path.GetFileName(entry));
-                    if (Directory.Exists(entry)) Directory.Move(entry, to); else File.Move(entry, to);
-                }
-                Log.Info($"AssetRipper exported into {nested}, moved up");
-                break;
-            }
-        }
         if (!ResultExists(context) || !Directory.Exists(Path.Combine(workspace.ExportedProject, "Assets", "Plugins")))
             throw new BuildException("AssetRipper did not export the game (no project in the export folder)", log)
                 { Code = "export-empty" };
