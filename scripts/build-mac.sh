@@ -21,7 +21,7 @@ trap 'echo "build_repoquest.sh stopped at line $LINENO" >&2' ERR
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=1.0.7-qc1
 KIT_URL="https://github.com/crimecock/repo-quest-vr/releases/download/v$VERSION/repoquest-kit-$VERSION.zip"
-KIT_SHA="${KIT_SHA:-1745f0a80057bfa676c8f66eab35891081d585035243313a212c4dce9b3c11b4}"
+KIT_SHA="${KIT_SHA:-99c05912e15f7b301db4319d8215d4c8f97cdde0c333be5f266d33e9462bb3a7}"
 BASE="${REPOQUEST_HOME:-$HOME/RepoQuest}"
 GAME="${GAME:-$BASE/game}"
 UNITY_VERSION=6000.3.17f1
