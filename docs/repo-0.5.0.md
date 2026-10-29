@@ -37,6 +37,7 @@ The builder (`builder/QuestBuilder.Cli`, .NET 8) runs in steps and remembers eac
 | `MetaManager.Start` no longer generates icons | — | `CosmeticsCloud.StartAfterSync` follows the new Start |
 | Menus click through `InputKey.UIClick` instead of `Input.GetMouseButtonDown` | RepoXR's mouse patches in 5 menu methods match nothing: buttons would not click in VR | `KeyDown`/`KeyHold`/`KeyUp` answer UIClick with the VR pointer's trigger |
 | The tumble-climb rotation moved from `GrabStateClimb` to `ClimbTargetUpdate` | The transpiler cut into the end of `GrabStateClimb`; IL2CPP refused it | The patch targets `ClimbTargetUpdate` and throws if it finds nothing |
+| `PlayerLocalCamera.OnPhotonSerializeView` keeps `CameraAim.Instance` in a typed local | The patch that sends the VR camera instead of the aim stored `this` (a PlayerLocalCamera) into a CameraAim local; clang rejected IL2CPP's C++ | The local stays; only the two transform reads use the PlayerLocalCamera's transform |
 | `InputKey.Confirm` → `UIClick` and other renames, new overloads | 16 RepoXR patch classes failed | `patches/repoxr/0009-repo-0.5.0.patch` |
 
 ## Performance
@@ -76,7 +77,9 @@ and physics.
 IL2CPP reports bad IL only 40 minutes into a build, so the bake is checked beforehand with `tools/IlCheck`:
 - `IlCheck stack <dll>...`: stack depth along every path of every method, which is what IL2CPP calls invalid IL;
 - `IlCheck diff <original> <baked>`: what changed in each method. A transpiler target without changes is a patch that
-  silently matched nothing; a change in the last few instructions after an `Advance(-N)` is suspicious.
+  silently matched nothing; a change in the last few instructions after an `Advance(-N)` is suspicious;
+- `IlCheck types <dll>... --search <dir>`: class-typed values stored into locals and fields and the `this` of calls,
+  against their declared types. IL2CPP's C++ is typed, so clang rejects what the CLR would accept.
 
 ## Risks
 

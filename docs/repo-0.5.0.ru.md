@@ -33,6 +33,7 @@
 | Платформенный слой: `SteamPlatform.Initialise` и лобби зовут `SteamApps.CurrentBetaName` | В SteamShim такого не было: исключение при старте и при создании лобби | SteamShim: `SteamApps` (`null`, как на основной ветке Steam), `SteamUserStats.IndicateAchievementProgress`, клавиатура геймпада Steam (говорит «нет клавиатуры», игра остаётся на своей) |
 | Нет `MenuPageSavesRename` | Страница входа в Steam строилась из неё | `MenuTextPage` строится из `MenuPagePopUpTextInput` (`MenuPageIndex.PopUpTextInput`) |
 | `MetaManager.Start` без `GenerateIcons` (иконки готовые, в Addressables) | — | `CosmeticsCloud.StartAfterSync` повторяет новый Start |
+| `PlayerLocalCamera.OnPhotonSerializeView` хранит `CameraAim.Instance` в типизированной локальной переменной | Патч, отправляющий VR-камеру вместо прицела, клал туда `this` (PlayerLocalCamera); clang отказался компилировать C++ от IL2CPP | Локальная остаётся CameraAim, только два чтения transform берут transform PlayerLocalCamera |
 | Меню кликают через `InputKey.UIClick`, а не `Input.GetMouseButtonDown` | Патчи мыши RepoXR в 5 методах меню ничего не находят: в VR кнопки не нажимались бы | `KeyDown`/`KeyHold`/`KeyUp` отвечают на UIClick курком VR-луча |
 | Поворот лазания в кувырке перенесён из `GrabStateClimb` в `ClimbTargetUpdate` | Транспайлер испортил конец `GrabStateClimb`, IL2CPP отказался собирать | Патч перенесён в `ClimbTargetUpdate`, падает, если не нашёл место |
 | AssetRipper 2.0.0 пишет WAV с нулевыми размерами чанков | Unity 6 не декодирует все 3417 звуков | `fix_wav_headers.py` после копии экспорта |
@@ -82,7 +83,8 @@
 
 IL2CPP узнаёт о плохом IL только через 40 минут сборки, поэтому результат встраивания проверяется заранее инструментом `tools/IlCheck` (Mono.Cecil):
 - `IlCheck stack <dll>...` — глубина стека по всем путям каждого метода, то, что IL2CPP называет «invalid IL»;
-- `IlCheck diff <оригинал> <после встраивания>` — что поменялось в каждом методе относительно игры. Цель транспайлера без изменений — молча не сработавший патч; изменение в самом конце метода после `Advance(-N)` — подозрительно.
+- `IlCheck diff <оригинал> <после встраивания>` — что поменялось в каждом методе относительно игры. Цель транспайлера без изменений — молча не сработавший патч; изменение в самом конце метода после `Advance(-N)` — подозрительно;
+- `IlCheck types <dll>... --search <папка>` — значения-классы, которые кладутся в локальные переменные и поля, и `this` вызовов против объявленных типов. C++ от IL2CPP типизирован, и clang не пропускает то, что принял бы CLR.
 
 ## Риски
 

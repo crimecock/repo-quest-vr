@@ -40,6 +40,77 @@ index 3ed9ba9..51ae552 100644
      [HarmonyPrefix]
      private static bool DisableShakeMenu()
      {
+diff --git a/Source/Patches/CameraPatches.cs b/Source/Patches/CameraPatches.cs
+index ddbb978..4285bd5 100644
+--- a/Source/Patches/CameraPatches.cs
++++ b/Source/Patches/CameraPatches.cs
+@@ -1,4 +1,5 @@
+-﻿using System.Collections.Generic;
++﻿using System;
++using System.Collections.Generic;
+ using System.Reflection.Emit;
+ using HarmonyLib;
+ using RepoXR.Managers;
+@@ -103,14 +104,55 @@ internal static class CameraPatches
+     /// <summary>
+     /// Make sure to synchronize the VR camera transforms instead of only the aim transforms
+     /// </summary>
++    // R.E.P.O. 0.5.0 keeps CameraAim.Instance in a CameraAim local (null check, then its transform twice); putting
++    // `this` into that local is a type error IL2CPP's C++ rejects. The local keeps CameraAim; only the two transform
++    // reads take the PlayerLocalCamera's own transform instead
+     [HarmonyPatch(typeof(PlayerLocalCamera), nameof(PlayerLocalCamera.OnPhotonSerializeView))]
+     [HarmonyTranspiler]
+     private static IEnumerable<CodeInstruction> CameraSerializeVRParams(IEnumerable<CodeInstruction> instructions)
+     {
+-        return new CodeMatcher(instructions)
+-            .MatchForward(false, new CodeMatch(OpCodes.Ldsfld, Field(typeof(CameraAim), nameof(CameraAim.Instance))))
+-            .Repeat(matcher => matcher.SetOpcodeAndAdvance(OpCodes.Ldarg_0))
+-            .InstructionEnumeration();
++        var getTransform = PropertyGetter(typeof(Component), nameof(Component.transform));
++        var matcher = new CodeMatcher(instructions)
++            .MatchForward(false,
++                new CodeMatch(OpCodes.Ldsfld, Field(typeof(CameraAim), nameof(CameraAim.Instance))),
++                new CodeMatch(instruction => instruction.IsStloc()))
++            .ThrowIfInvalid("PlayerLocalCamera.OnPhotonSerializeView: CameraAim.Instance local not found");
++        var local = matcher.InstructionAt(1);
++        var replaced = 0;
++
++        matcher.Start();
++        while (matcher.IsValid && matcher.Pos < matcher.Length - 1)
++        {
++            var current = matcher.Instruction;
++            if (current.IsLdloc() && SameLocal(current, local) && matcher.InstructionAt(1).Calls(getTransform))
++            {
++                matcher.SetInstruction(new CodeInstruction(OpCodes.Ldarg_0).WithLabels(current.labels)
++                    .WithBlocks(current.blocks));
++                replaced++;
++            }
++            matcher.Advance(1);
++        }
++
++        if (replaced == 0)
++            throw new InvalidOperationException("PlayerLocalCamera.OnPhotonSerializeView: no CameraAim transform read");
++        return matcher.InstructionEnumeration();
++
++        static bool SameLocal(CodeInstruction load, CodeInstruction store) =>
++            LocalIndex(load) == LocalIndex(store) && LocalIndex(load) >= 0;
++
++        static int LocalIndex(CodeInstruction instruction) => instruction.opcode.Value switch
++        {
++            // ldloc.0-3 = 0x06-0x09, stloc.0-3 = 0x0A-0x0D
++            >= 0x06 and <= 0x09 => instruction.opcode.Value - 0x06,
++            >= 0x0A and <= 0x0D => instruction.opcode.Value - 0x0A,
++            _ => instruction.operand switch
++            {
++                LocalBuilder builder => builder.LocalIndex,
++                int index => index,
++                byte index => index,
++                _ => -1,
++            },
++        };
+     }
+ 
+     /// <summary>
 diff --git a/Source/Patches/DebugPatches.cs b/Source/Patches/DebugPatches.cs
 index f694de4..c9665bc 100644
 --- a/Source/Patches/DebugPatches.cs
