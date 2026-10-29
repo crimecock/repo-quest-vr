@@ -7,7 +7,7 @@
 #
 # What it does (work folder ~/RepoQuest, an ASCII path: Unity and Gradle break on others; REPOQUEST_HOME changes it):
 #   1. .NET 8 SDK into ~/.dotnet (Microsoft's dotnet-install.sh), if there is none yet
-#   2. the kit (scripts, Unity tooling, prebuilt RepoXR/SteamShim/Standalone; no game files) from this fork's release,
+#   2. the kit (scripts, Unity tooling, prebuilt RepoXR/SteamShim/Standalone; no game files) from this fork (kit branch),
 #      or KIT_ZIP=<zip> for a local one
 #   3. the game: the Windows version of R.E.P.O. from Steam through steamcmd (asks for your Steam login once; your
 #      password goes only to Steam)
@@ -20,7 +20,7 @@ trap 'echo "build_repoquest.sh stopped at line $LINENO" >&2' ERR
 
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
 VERSION=1.0.7-qc1
-KIT_URL="https://github.com/crimecock/repo-quest-vr/releases/download/v$VERSION/repoquest-kit-$VERSION.zip"
+KIT_URL="${KIT_URL:-https://github.com/crimecock/repo-quest-vr/raw/kit/repoquest-kit-$VERSION.zip}"
 KIT_SHA="${KIT_SHA:-99c05912e15f7b301db4319d8215d4c8f97cdde0c333be5f266d33e9462bb3a7}"
 BASE="${REPOQUEST_HOME:-$HOME/RepoQuest}"
 GAME="${GAME:-$BASE/game}"

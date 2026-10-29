@@ -56,14 +56,26 @@ cd repo-quest-vr
 bash scripts/build-mac.sh
 ```
 
-The script downloads the kit from this fork's [Releases](../../releases), the game through `steamcmd` (it asks for your
+The script downloads the kit from this fork's [`kit` branch](../../tree/kit), the game through `steamcmd` (it asks for your
 Steam login once; the password goes only to Steam), builds the builder and the APK, and installs it on the headset.
 The first build takes 1–1.5 hours. Use `GAME=/path/to/REPO` for a copy you already have, `--no-install` to build only.
 
-### Windows (or any OS with .NET 8)
+### Windows
 
-The original Windows builder app embeds the 1.0.7 kit and cannot build 0.5.0. Use the command-line builder from this
-repository with the kit from [Releases](../../releases):
+The original Windows builder app embeds the 1.0.7 kit and cannot build 0.5.0. In PowerShell, in a folder with an
+ASCII path without spaces:
+
+```powershell
+git clone https://github.com/crimecock/repo-quest-vr.git
+cd repo-quest-vr
+powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
+```
+
+Step-by-step guide with the headset setup, options and troubleshooting: [`docs/build-windows.md`](docs/build-windows.md).
+
+### Any OS with .NET 8
+
+The command-line builder with the unzipped kit from the [`kit` branch](../../tree/kit):
 
 ```
 dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <unzipped kit> --game <folder with REPO_Data> --workspace <work folder> --unity <Unity 6000.3.17f1 folder> --headset quest

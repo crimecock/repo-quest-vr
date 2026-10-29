@@ -57,14 +57,26 @@ cd repo-quest-vr
 bash scripts/build-mac.sh
 ```
 
-Скрипт скачает набор порта из [релизов](../../releases) этого форка, игру через `steamcmd` (один раз спросит логин
+Скрипт скачает набор порта из [ветки `kit`](../../tree/kit) этого форка, игру через `steamcmd` (один раз спросит логин
 Steam; пароль уходит только в Steam), соберёт сборщик и APK и поставит его в шлем. Первая сборка — 1–1,5 часа.
 `GAME=/путь/к/REPO` — для уже скачанной копии, `--no-install` — только собрать.
 
-### Windows (или любая ОС с .NET 8)
+### Windows
 
-Оконный сборщик автора содержит набор 1.0.7 и 0.5.0 собрать не может. Используйте консольный сборщик из этого
-репозитория и набор из [релизов](../../releases):
+Оконный сборщик автора содержит набор 1.0.7 и 0.5.0 собрать не может. В PowerShell, в папке с путём латиницей без
+пробелов:
+
+```powershell
+git clone https://github.com/crimecock/repo-quest-vr.git
+cd repo-quest-vr
+powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
+```
+
+Пошаговая инструкция — подготовка шлема, параметры, частые проблемы: [`docs/build-windows.ru.md`](docs/build-windows.ru.md).
+
+### Любая ОС с .NET 8
+
+Консольный сборщик и распакованный набор из [ветки `kit`](../../tree/kit):
 
 ```
 dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <распакованный набор> --game <папка с REPO_Data> --workspace <рабочая папка> --unity <папка Unity 6000.3.17f1> --headset quest
