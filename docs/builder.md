@@ -146,6 +146,11 @@ after removing the workspace.
   of every rebuild.
 - 2026-10-10, importing the project into an empty Library (`-quit`, 19,600 imports): 361 s one at a time, 246 s with
   Parallel Import.
+- 2026-10-29, R.E.P.O. 0.5.0 on Unity 6000.3 (this fork): a rebuild after a code change, 27–34 minutes of Unity, of
+  which building the Main scene 6 minutes and writing asset files 13–18; every shader came from the cache (0 variants
+  compiled, the "Compiling shader" lines are the scene being packed). A code-only build (`--scripts-only`,
+  `BuildOptions.BuildScriptsOnly`, no Addressables content build) reusing that data: Unity 5 minutes (BuildPlayer 3:50),
+  about 6 minutes in all.
 
 **Measurements (a friend's Windows 10 PC, 8 CPUs, 23 GB, builder 1.0.4, first build, 2026-10-09).** Export 3.4 minutes,
 project 7 minutes, Unity's import 35 minutes (25 + 8.5 in two refreshes; the Mac imports in 6). Then BuildApk:
