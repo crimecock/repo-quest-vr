@@ -96,3 +96,10 @@ The script builds the kit (the current kit with this checkout's scripts, Unity t
 game version as tested (`builder/kit.json`) and as the check's new baseline (`scripts/game_fingerprints.json`), updates
 the version and checksum in both build scripts, tags the release, pushes the kit to the `kit` branch and creates the
 GitHub release. `--dry-run` does everything but commit and push; `--prerelease` marks an untested build.
+
+**What the scripts depend on.** `scripts/build-mac.sh` and `scripts/build-windows.ps1` download exactly the kit named
+in them (`repoquest-kit-<VERSION>.zip` on the `kit` branch, checked by SHA-256); they never look at GitHub releases,
+so a release or pre-release changes nothing for them. What breaks them: new `VERSION`/`KIT_SHA` in the scripts
+without that kit on the `kit` branch (release-fork.sh pushes both together), or removing a kit from the branch that a
+checkout still names. `scripts/prepare-repoxr.sh` takes the Unity 6 XR libraries from the PC fork's alpha 6 release by
+URL and SHA-256: keep that release and its zips.
