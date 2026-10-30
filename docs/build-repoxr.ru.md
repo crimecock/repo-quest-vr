@@ -96,9 +96,7 @@ REPOXR_DLL=$PWD/work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll CODE_ONLY=
 собирает APK из этой копии. `CODE_ONLY=1` берёт данные игры из вашей прошлой полной сборки (около 10 минут); если её не
 было — сборка полная. Следующая сборка без `REPOXR_DLL` снова берёт DLL из набора.
 
-Совсем новый набор (с пересборкой всех частей: RepoXR.Standalone, SteamShim, libopus, Android-ассеты RepoXR через Unity) —
-`scripts/make-kit.sh`; выпуск версии форка (набор в ветке `kit`, версии в скриптах сборки, тег, релиз на GitHub) —
-`scripts/release-fork.sh` ([updating.ru.md](updating.ru.md#тем-кто-поддерживает-форк)).
+Весь набор с нуля (ещё RepoXR.Standalone, SteamShim, libopus): [build-kit.ru.md](build-kit.ru.md).
 
 ## На Windows
 

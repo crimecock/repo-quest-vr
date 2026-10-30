@@ -97,9 +97,7 @@ The script takes the current kit, copies it to `~/RepoQuest/kit-<version>-custom
 (about 10 minutes); without an earlier build it does a full one. The next build without `REPOXR_DLL` uses the kit's own
 DLL again.
 
-A whole new kit (all its parts rebuilt: RepoXR.Standalone, SteamShim, libopus, RepoXR's Android assets with Unity) is
-`scripts/make-kit.sh`; a release of this fork (kit on the `kit` branch, versions in the build scripts, tag, GitHub
-release) is `scripts/release-fork.sh` ([updating.md](updating.md#for-maintainers)).
+The whole kit from scratch (RepoXR.Standalone, SteamShim, libopus too): [build-kit.md](build-kit.md).
 
 ## On Windows
 

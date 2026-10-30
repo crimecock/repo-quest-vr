@@ -221,7 +221,8 @@ the kit (kit branch): scripts,     ├─ scripts/build-mac.sh / build-windows.p
 You never compile RepoXR (the VR mod) to play: its DLL comes ready-made in the kit, and the scripts bake it into the
 game's code. It is built from DaXcess's RepoXR 1.2.3 plus [`patches/repoxr`](patches/repoxr) with `scripts/prepare-repoxr.sh`
 (.NET 10), and has the same code as the [PC fork](https://github.com/crimecock/RepoXR)'s release. To change it or
-rebuild it yourself: [`docs/build-repoxr.md`](docs/build-repoxr.md).
+rebuild it yourself: [`docs/build-repoxr.md`](docs/build-repoxr.md); every part of the kit from scratch:
+[`docs/build-kit.md`](docs/build-kit.md).
 
 ## When R.E.P.O. updates
 

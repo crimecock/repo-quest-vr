@@ -10,30 +10,76 @@
 #   prebuilt/steam/                         tools/SteamShim (Facepunch.Steamworks.Win64) with SteamKit2, protobuf-net(.Core),
 #                                           System.Collections.Immutable
 #   prebuilt/android/libopus_egpv.so        scripts/build-opus-android.sh
-#   prebuilt/repoxr-android/                RepoXR's assets for Android (scripts/build-repoxr-assets.sh, Unity; rebuilt
-#                                           when its inputs change)
+#   prebuilt/repoxr-android/                RepoXR's assets for Android: from the current kit (build-mac.sh's VERSION), or
+#                                           rebuilt with REBUILD_REPOXR_ASSETS=1 (scripts/build-repoxr-assets.sh: Unity
+#                                           2022.3.62f3 and external/RepoXR-Unity; they only change with RepoXR-Unity)
 #   licenses/, SOURCES.md                   licenses of what the kit carries and where its sources are
-# The checks at the end refuse anything that looks like game files.
+# The checks at the end refuse anything that looks like game files. Step by step: docs/build-kit.md.
+#   GAME=<folder with REPO_Data>   the Windows game to compile against (default ~/RepoQuest/game)
+#   NDK=<NDK bin folder>            for libopus (default: Unity 6000.3.17f1's, else 2022.3.62f3's)
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 kit="$root/work/kit"
 version="${1:-dev}"
 dotnet="${DOTNET:-$HOME/.dotnet/dotnet}"
+game="${GAME:-$HOME/RepoQuest/game}"
+downloads="$root/work/downloads"
+die() { echo "ERROR: $*" >&2; exit 1; }
+sha256() { if command -v shasum >/dev/null; then shasum -a 256 "$1"; else sha256sum "$1"; fi | cut -d' ' -f1; }
+[ -x "$dotnet" ] || dotnet="$(command -v dotnet || true)"
+[ -n "$dotnet" ] || die "no dotnet: run scripts/build-mac.sh once (it installs the .NET 8 SDK into ~/.dotnet) or pass DOTNET="
+[ -f "$game/REPO_Data/Managed/Assembly-CSharp.dll" ] || die "R.E.P.O. not found in $game: GAME=<folder with REPO_Data>"
+
+# kit.json's pinned downloads: RepoXR 1.2.3 (its Unity 2022 XR libraries and BepInEx, which RepoXR.Standalone
+# compiles against; the APK gets the same ones from the builder)
+fetch() {  # fetch <kit.json key> <folder to unpack into>
+    local url sha
+    read -r url sha < <(python3 -c 'import json,sys; d=json.load(open(sys.argv[1]))["downloads"][sys.argv[2]]; print(d["url"], d["sha256"])' \
+        "$root/builder/kit.json" "$1")
+    [ -d "$2" ] && [ "$(cat "$2/.sha" 2>/dev/null)" = "$sha" ] && return
+    mkdir -p "$downloads"
+    curl -fsSL "$url" -o "$downloads/$1.zip"
+    [ "$(sha256 "$downloads/$1.zip")" = "$sha" ] || die "$url: SHA-256 does not match kit.json"
+    rm -rf "$2" && mkdir -p "$2" && unzip -q -o "$downloads/$1.zip" -d "$2" && echo "$sha" > "$2/.sha"
+}
+fetch repoXR "$downloads/RepoXR-1.2.3"
+fetch bepInEx "$downloads/BepInEx5"
 
 "$root/scripts/prepare-repoxr.sh" >/dev/null
-"$dotnet" build -c Release -v quiet -nologo "$root/tools/SteamShim" >/dev/null
-"$dotnet" build -c Release -v quiet -nologo "$root/tools/RepoXR.Standalone" >/dev/null
+"$dotnet" build -c Release -v quiet -nologo -clp:ErrorsOnly -p:WarningLevel=0 "$root/tools/SteamShim" \
+    || die "SteamShim did not build"
+"$dotnet" build -c Release -v quiet -nologo -clp:ErrorsOnly -p:WarningLevel=0 "$root/tools/RepoXR.Standalone" \
+    -p:GameManaged="$game/REPO_Data/Managed" || die "RepoXR.Standalone did not build"
 [ -f "$root/work/opus-android/libopus_egpv.so" ] || "$root/scripts/build-opus-android.sh"
 
-# RepoXR's Android assets take a Unity run: only when RepoXR-Unity or our changes to it moved on
+# RepoXR's Android assets take a Unity 2022 run and only change with RepoXR-Unity: taken from the current kit unless
+# REBUILD_REPOXR_ASSETS=1
 assets="$root/work/repoxr-android"
-stamp="$( (git -C "$root/external/RepoXR-Unity" rev-parse HEAD
-           find "$root/unity-tools/RepoXRAssets" "$root/scripts/patch_repoxr_shaders.py" "$root/scripts/build-repoxr-assets.sh" \
-               -type f -exec shasum -a 256 {} \; | sed "s|$root/||" | sort) | shasum -a 256 | cut -d' ' -f1)"
-if [ ! -f "$assets/repoxrassets" ] || [ "$(cat "$assets/.stamp" 2>/dev/null)" != "$stamp" ]; then
-    "$root/scripts/build-repoxr-assets.sh" >/dev/null
-    echo "$stamp" > "$assets/.stamp"
+if [ "${REBUILD_REPOXR_ASSETS:-0}" = 1 ]; then
+    stamp="$( (git -C "$root/external/RepoXR-Unity" rev-parse HEAD
+               find "$root/unity-tools/RepoXRAssets" "$root/scripts/patch_repoxr_shaders.py" "$root/scripts/build-repoxr-assets.sh" \
+                   -type f -exec shasum -a 256 {} \; | sed "s|$root/||" | sort) | shasum -a 256 | cut -d' ' -f1)"
+    if [ ! -f "$assets/repoxrassets" ] || [ "$(cat "$assets/.stamp" 2>/dev/null)" != "$stamp" ]; then
+        "$root/scripts/build-repoxr-assets.sh" >/dev/null
+        echo "$stamp" > "$assets/.stamp"
+    fi
+else
+    current="$(sed -n 's/^VERSION=//p' "$root/scripts/build-mac.sh")"
+    current_sha="$(sed -n 's/^KIT_SHA="${KIT_SHA:-\(.*\)}"$/\1/p' "$root/scripts/build-mac.sh")"
+    zip="$HOME/RepoQuest/downloads/repoquest-kit-$current.zip"
+    if [ ! -f "$zip" ] || [ "$(sha256 "$zip")" != "$current_sha" ]; then
+        zip="$downloads/repoquest-kit-$current.zip"
+        [ -f "$zip" ] && [ "$(sha256 "$zip")" = "$current_sha" ] || {
+            mkdir -p "$downloads"
+            curl -fsSL "https://github.com/crimecock/repo-quest-vr/raw/kit/repoquest-kit-$current.zip" -o "$zip"
+            [ "$(sha256 "$zip")" = "$current_sha" ] || die "kit $current: SHA-256 does not match scripts/build-mac.sh"
+        }
+    fi
+    rm -rf "$assets" && mkdir -p "$assets"
+    unzip -q -o "$zip" 'prebuilt/repoxr-android/*' -d "$assets.tmp"
+    mv "$assets.tmp/prebuilt/repoxr-android/"* "$assets/" && rm -rf "$assets.tmp"
+    echo "RepoXR's Android assets: from kit $current"
 fi
 
 rm -rf "$kit"

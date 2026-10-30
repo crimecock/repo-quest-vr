@@ -217,7 +217,8 @@ dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <рас�
 Чтобы играть, RepoXR (VR-мод) компилировать не нужно: его DLL лежит в наборе готовой, и скрипты встраивают её в код
 игры. Она собирается из RepoXR 1.2.3 от DaXcess и [`patches/repoxr`](patches/repoxr) скриптом `scripts/prepare-repoxr.sh`
 (.NET 10), и её код совпадает с релизом [ПК-форка](https://github.com/crimecock/RepoXR). Поменять её или собрать
-самому: [`docs/build-repoxr.ru.md`](docs/build-repoxr.ru.md).
+самому: [`docs/build-repoxr.ru.md`](docs/build-repoxr.ru.md); все части набора с нуля:
+[`docs/build-kit.ru.md`](docs/build-kit.ru.md).
 
 ## Когда R.E.P.O. обновляется
 

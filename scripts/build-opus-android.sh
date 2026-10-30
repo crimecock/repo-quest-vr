@@ -9,7 +9,17 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 version="1.5.2"
 src="$root/work/downloads/opus-$version"
 out="$root/work/opus-android"
-ndk="/Applications/Unity/Hub/Editor/2022.3.62f3/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin"
+# Unity's NDK (Android Build Support): Unity 6000.3.17f1's, else 2022.3.62f3's, or NDK=<.../toolchains/llvm/prebuilt/<host>/bin>
+ndk="${NDK:-}"
+if [ -z "$ndk" ]; then
+    for unity in 6000.3.17f1 2022.3.62f3; do
+        for host in darwin-x86_64 linux-x86_64; do
+            candidate="/Applications/Unity/Hub/Editor/$unity/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/$host/bin"
+            [ -d "$candidate" ] && { ndk="$candidate"; break 2; }
+        done
+    done
+fi
+[ -n "$ndk" ] && [ -x "$ndk/aarch64-linux-android29-clang" ] || { echo "ERROR: Unity's Android NDK not found; pass NDK=<.../toolchains/llvm/prebuilt/<host>/bin>" >&2; exit 1; }
 
 if [ ! -d "$src" ]; then
     mkdir -p "$root/work/downloads"
