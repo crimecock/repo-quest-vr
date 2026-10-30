@@ -85,6 +85,8 @@
 | Новые `InputKey`: `VehicleAccelerate`, `VehicleBrake`, `VehicleDriftLeft/Right`, `VehicleExit`, `VehicleGrab`, `PushPull`, `ExpressionWheel`, навигация по UI | В наборе VR-действий RepoXR их нет; поиск такого действия бросал исключение на каждый вызов (во время езды — каждый кадр) и откатывался на клавиатурную привязку | Патч 0019: ищется один раз; клавиши техники — на стике ходьбы, `VehicleGrab` — на Grab |
 | `InputManager.VehicleInputAllowed` требует включённую собственную карту действий игры `Player` | Ввод в VR идёт из своего `PlayerInput` RepoXR; снегоход и гольф-кар могли не слушаться стика | Патч 0019: в VR — только остальные проверки (фокус, ввод текста, отключённый ввод) |
 | `InputKey.Confirm` → `UIClick` и другие переименования | Патчи RepoXR не применялись (16 классов) | Патч `0009-repo-0.5.0.patch`, см. CODE-MAP |
+| Меню настроек 0.5.0, переключатели, теги текста, зеркало в магазине, контроллеры Quest 3 (Touch Plus) | Значки «?», `[move]`, переключатели не на том варианте, каша в зеркале, *DISCONNECTED* на странице управления | `0030`–`0032` (alpha 4–6 ПК-форка); причина и исправление по каждому — [в таблице ПК-форка](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/docs/repo-0.5.0.ru.md#что-изменилось-в-050-и-что-делает-порт) |
+| Проект RepoXR берёт R.E.P.O. и Unity из NuGet, а там только R.E.P.O. 0.4.4 и Unity 2022 | RepoXR.dll под 0.5.0 не собиралась из этого репозитория | `0033-build-against-the-game-folder.patch`: вместо этого папка игры (`GamePath`) и XR-пакеты Unity 6 (`XRDeps`), с publicize там, где RepoXR лезет во внутренности; `scripts/prepare-repoxr.sh` на .NET 10 SDK ([build-repoxr.ru.md](build-repoxr.ru.md)) |
 
 ## Оптимизация
 

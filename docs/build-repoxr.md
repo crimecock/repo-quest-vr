@@ -27,6 +27,11 @@ The patches applied to DaXcess's RepoXR give exactly the PC fork's sources: the 
 tested, and patch `00NN` is `git diff <previous> <new> -- Source` there. So the Quest's RepoXR.dll and the PC release's
 RepoXR.dll have the same code (IL); only the PC zip adds BepInEx around it.
 
+**Why it needs your copy of the game.** A mod is compiled against the game's own DLLs (its code, Unity, Photon,
+Steamworks). DaXcess's RepoXR downloads them from NuGet, a package server for .NET, but NuGet only has R.E.P.O. 0.4.4
+and Unity 2022. Patch 0033 makes RepoXR's project take them from your Windows copy of R.E.P.O. 0.5.0 instead, and the
+XR libraries built for Unity 6 from the PC fork's release. From NuGet only BepInEx and two small build tools come.
+
 ## 1. What you need
 
 - A Mac (or Linux) with `git`, `rsync`, `patch`, `curl`, `unzip`. On macOS, `xcode-select --install` gives git.

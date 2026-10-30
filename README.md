@@ -107,6 +107,18 @@ level, expression wheel, item auto hold, climbing, vehicles...) and its status: 
   shoulder; VR Settings → Input → *Whip Sideways/Crack Sensitivity*). In the scene handoff the old VR loading screen
   cleared the new one's reference, and level → shop hung on the result screen. The news popup grows from nothing and
   its words came out as solid bars; its texts are built again once it has grown.
+- **Settings menus, the shop mirror, Quest 3 controls, tutorial texts** (the PC fork's alpha 4–6, tested there):
+  [`0030`](patches/repoxr/0030-settings-menus-controller-icons-text-tags.patch) rebuilds the controller icon sheet that Unity 6's
+  TextMeshPro reads without glyphs or material, takes the text tags from 0.5.0's `InputGlyphs` (no more `[move]`) and
+  fixes the toggles and the *VR Settings* button; [`0031`](patches/repoxr/0031-shop-mirror-toggles.patch) makes the game's mirror
+  camera render mono, once per eye from that eye's reflected pose (it rendered as a stereo camera, so the eye matrices
+  replaced its view); hidden with single-pass rendering, where both eyes would share one reflection;
+  [`0032`](patches/repoxr/0032-tutorial-texts-quest-controller-scheme-render-mode.patch) gives the Quest 3's Touch Plus controllers
+  a control scheme (the controls page said *DISCONNECTED*), adds *Render Mode*, and shows RepoXR's VR tutorial texts in
+  English. Each problem, its cause and the fix: [the PC fork's table](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/docs/repo-0.5.0.md#what-changed-in-050-and-what-the-port-does).
+- **Building RepoXR.dll** ([`0033`](patches/repoxr/0033-build-against-the-game-folder.patch)): NuGet only has R.E.P.O. 0.4.4 and
+  Unity 2022, so RepoXR's project now compiles against your Windows copy of the game and the Unity 6 XR packages, with
+  the .NET 10 SDK (RepoXR uses C# 14). [`docs/build-repoxr.md`](docs/build-repoxr.md).
 - **Unity 6 engine methods**: Unity 6 turned engine methods such as `Camera.set_targetTexture` into managed code; the
   baker now hooks them at their call sites, as it did for the old externs. Without this the game kept rendering into
   its small render texture and the headset showed a black, smearing world.

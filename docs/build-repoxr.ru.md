@@ -27,6 +27,11 @@ APK на Quest
 `00NN` — это `git diff <предыдущий> <новый> -- Source` оттуда. Поэтому RepoXR.dll для Quest и RepoXR.dll из ПК-релиза —
 один и тот же код (IL); ПК-архив только добавляет вокруг BepInEx.
 
+**Зачем нужна ваша копия игры.** Мод компилируется по DLL самой игры (её код, Unity, Photon, Steamworks). RepoXR от
+DaXcess скачивает их из NuGet (сервер пакетов для .NET), но там только R.E.P.O. 0.4.4 и Unity 2022. Патч 0033 переводит
+проект RepoXR на вашу Windows-копию R.E.P.O. 0.5.0, а XR-библиотеки под Unity 6 берутся из релиза ПК-форка. Из NuGet
+скачиваются только BepInEx и два маленьких инструмента сборки.
+
 ## 1. Что нужно
 
 - Mac (или Linux) с `git`, `rsync`, `patch`, `curl`, `unzip`. На macOS git ставится командой `xcode-select --install`.

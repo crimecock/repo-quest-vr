@@ -87,6 +87,8 @@ RepoXR code.
 | New `InputKey`s: `VehicleAccelerate`, `VehicleBrake`, `VehicleDriftLeft/Right`, `VehicleExit`, `VehicleGrab`, `PushPull`, `ExpressionWheel`, UI navigation | RepoXR's VR action map has none of them; looking one up threw an exception on every call (every frame while driving) and fell back to the keyboard binding | Patch 0019: looked up once; vehicle keys on the movement stick, `VehicleGrab` on Grab |
 | `InputManager.VehicleInputAllowed` requires the game's own `Player` action map to be enabled | VR input comes from RepoXR's own `PlayerInput`; the snow bike and golf cart could ignore the stick | Patch 0019: in VR the other checks only (focus, text input, disabled input) |
 | `InputKey.Confirm` → `UIClick` and other renames, new overloads | 16 RepoXR patch classes failed | `patches/repoxr/0009-repo-0.5.0.patch` |
+| 0.5.0's settings menus, toggles, text tags, shop mirror, Quest 3 controllers (Touch Plus) | Icons as `?`, `[move]`, toggles showing the wrong option, a garbled mirror, *DISCONNECTED* on the controls page | `0030`–`0032` (the PC fork's alpha 4–6); cause and fix for each: [the PC fork's table](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/docs/repo-0.5.0.md#what-changed-in-050-and-what-the-port-does) |
+| RepoXR's project gets R.E.P.O. and Unity from NuGet, which only has R.E.P.O. 0.4.4 and Unity 2022 | RepoXR.dll could not be built for 0.5.0 from this repository | `0033-build-against-the-game-folder.patch`: the game folder (`GamePath`) and the Unity 6 XR packages (`XRDeps`) instead, publicized where RepoXR uses internals; `scripts/prepare-repoxr.sh` on the .NET 10 SDK ([build-repoxr.md](build-repoxr.md)) |
 
 ## Performance
 
