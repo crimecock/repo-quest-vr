@@ -30,7 +30,7 @@ All buttons and hand gestures: **[controls.md](controls.md)**. The short version
 Vehicles: point the beam at the seat or handlebar and press the right trigger once to get on, drive with the left
 stick, press the trigger again to get off ([controls.md](controls.md#vehicles)).
 
-Map: hand to the shoulder, hold grip. Flashlight on the head: other hand to the side of the head, grip. Inventory:
+Map: hand to the belt (where the map hangs) or to the shoulder, hold grip. Flashlight on the head: other hand to the side of the head, grip. Inventory:
 point a held item at a slot; take it out with the dominant hand in the slot and the trigger.
 
 Bindings can be changed in the game: *Settings → Controls* lists RepoXR's VR actions.

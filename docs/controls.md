@@ -32,7 +32,8 @@ swaps the hands.
 
 ## With your hands
 
-- **Map**: bring either hand to your shoulder. When the controller buzzes, hold that hand's **grip**: the map is in
+- **Map**: bring either hand to where the map hangs on your belt (at the hip; it moves to the other hip while you
+  hold something) or to your shoulder. When the controller buzzes, hold that hand's **grip**: the map is in
   your hand. Let go of the grip and it goes away. Not while sprinting.
 - **Flashlight on the head**: bring the other (non-dominant) hand to the side of your head and press **grip**. Press
   again to take it back into your hand.

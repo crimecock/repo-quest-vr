@@ -76,7 +76,7 @@ Details: [docs/playing.md](docs/playing.md#known-issues).
 | Right grip | Interact, fire a gun, horn |
 | A · B | Jump · tumble |
 
-Map at the shoulder (grip), flashlight at the head, inventory, weapons, the whip, vehicles, tumble climbing:
+Map at the belt or the shoulder (grip), flashlight at the head, inventory, weapons, the whip, vehicles, tumble climbing:
 [docs/controls.md](docs/controls.md). Rebind in *Settings → Controls*; free actions (Inventory 1–3, Expression 1–6,
 Push To Talk) can get a button there.
 
