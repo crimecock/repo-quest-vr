@@ -37,7 +37,8 @@ DaXcess скачивает их из NuGet (сервер пакетов для .
 - Mac (или Linux) с `git`, `rsync`, `patch`, `curl`, `unzip`. На macOS git ставится командой `xcode-select --install`.
 - **Windows-версия R.E.P.O. 0.5.0**: RepoXR компилируется по её коду. `scripts/build-mac.sh` при первом запуске
   скачивает её в `~/RepoQuest/game` (см. [build-mac.ru.md](build-mac.ru.md)); другая копия — `GAME=<папка с REPO_Data>`.
-- **.NET 10 SDK**: RepoXR написан на C# 14. Если его нет ни в `~/.dotnet10`, ни в `~/.dotnet`, скрипт поставит его в
+- **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** для шага 5 (сборщик APK): `scripts/build-mac.sh` сам ставит его в `~/.dotnet`.
+- **[.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)** для шагов 3–4: RepoXR написан на C# 14 (.NET 8 падает с `CS0106`). Если его нет ни в `~/.dotnet10`, ни в `~/.dotnet`, скрипт поставит его в
   `~/.dotnet10` (сборщик Quest держит свой .NET 8 в `~/.dotnet`). Или `DOTNET=<путь к dotnet>`.
 - Интернет: NuGet (BepInEx, publicizer), GitHub (XR-пакеты Unity 6 из релиза alpha 6 ПК-форка, с проверкой SHA-256),
   dot.net, если SDK нужно поставить.

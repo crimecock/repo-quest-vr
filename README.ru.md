@@ -158,6 +158,11 @@
 macOS — `steamcmd` с Rosetta 2 и саму игру; дальше сборщик скачивает AssetRipper, Python с пакетами, пакеты NuGet и
 встроенные шейдеры Unity, каждое из первоисточника. `adb` для установки в шлем есть в Android-модуле Unity.
 
+**Какой .NET:** для сборки APK нужен только **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** (сборщик), и скрипты ставят его сами (macOS:
+`~/.dotnet`, Windows: `%LOCALAPPDATA%\Microsoft\dotnet`); уже установленный тоже подойдёт. **[.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)**
+нужен только чтобы самому скомпилировать RepoXR.dll ([`docs/build-repoxr.ru.md`](docs/build-repoxr.ru.md)), его
+`scripts/prepare-repoxr.sh` ставит в `~/.dotnet10`.
+
 ### macOS
 
 ```bash

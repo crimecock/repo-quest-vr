@@ -17,7 +17,7 @@ everything the app did, step by step.
 - **Unity Hub** ([unity.com/download](https://unity.com/download)) and a free Unity account.
 - [Git for Windows](https://git-scm.com/download/win), or download the code as a ZIP (below).
 
-The script installs the **.NET 8 SDK** itself if it is missing. The builder downloads everything else (AssetRipper,
+The script installs the **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** itself if it is missing (only .NET 8 is needed to build the APK). The builder downloads everything else (AssetRipper,
 Python with its packages, BepInEx, NuGet packages, Unity's built-in shaders), each from its original source.
 
 ## 1. Install Unity 6000.3.17f1 with Android

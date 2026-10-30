@@ -15,7 +15,7 @@ headset. This is the script the port is built and tested with.
 - **Git**: `xcode-select --install` in Terminal installs Apple's command line tools with it. Or download the code as a
   ZIP (below).
 
-The script installs the **.NET 8 SDK** (into `~/.dotnet`), **steamcmd** and **Rosetta 2** (steamcmd is an Intel
+The script installs the **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** (into `~/.dotnet`; only .NET 8 is needed to build the APK), **steamcmd** and **Rosetta 2** (steamcmd is an Intel
 program; macOS asks for your password) itself when they are missing. The builder downloads everything else
 (AssetRipper, Python with its packages, NuGet packages, Unity's built-in shaders), each from its original source.
 

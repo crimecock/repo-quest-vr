@@ -37,7 +37,8 @@ XR libraries built for Unity 6 from the PC fork's release. From NuGet only BepIn
 - A Mac (or Linux) with `git`, `rsync`, `patch`, `curl`, `unzip`. On macOS, `xcode-select --install` gives git.
 - The **Windows version of R.E.P.O. 0.5.0**: RepoXR compiles against its code. `scripts/build-mac.sh` downloads it into
   `~/RepoQuest/game` on its first run (see [build-mac.md](build-mac.md)); any other copy with `GAME=<folder with REPO_Data>`.
-- The **.NET 10 SDK**: RepoXR is written in C# 14. If neither `~/.dotnet10` nor `~/.dotnet` has it, the script installs
+- The **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** for step 5 (the APK's builder): `scripts/build-mac.sh` installs it into `~/.dotnet` itself.
+- The **[.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)** for steps 3–4: RepoXR is written in C# 14 (.NET 8 stops with `CS0106`). If neither `~/.dotnet10` nor `~/.dotnet` has it, the script installs
   it into `~/.dotnet10` (the Quest builder keeps its .NET 8 in `~/.dotnet`). Or `DOTNET=<path to dotnet>`.
 - Internet: NuGet (BepInEx, the publicizer), GitHub (the Unity 6 XR packages from the PC fork's alpha 6 release, checked
   by SHA-256), dot.net if the SDK has to be installed.

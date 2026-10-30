@@ -15,7 +15,7 @@
 - **Git**: `xcode-select --install` в Терминале ставит вместе с ним инструменты командной строки Apple. Или скачайте
   код ZIP-архивом (ниже).
 
-**.NET 8 SDK** (в `~/.dotnet`), **steamcmd** и **Rosetta 2** (steamcmd — программа для Intel; macOS спросит пароль)
+**[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** (в `~/.dotnet`; для сборки APK нужен только .NET 8), **steamcmd** и **Rosetta 2** (steamcmd — программа для Intel; macOS спросит пароль)
 скрипт поставит сам, если их нет. Всё остальное (AssetRipper, Python с пакетами, пакеты NuGet, встроенные шейдеры
 Unity) сборщик скачает сам, каждое из первоисточника.
 

@@ -17,7 +17,7 @@
 - **Unity Hub** ([unity.com/download](https://unity.com/download)) и бесплатный аккаунт Unity.
 - [Git для Windows](https://git-scm.com/download/win) — или скачайте код ZIP-архивом (ниже).
 
-**.NET 8 SDK** скрипт поставит сам, если его нет. Всё остальное (AssetRipper, Python с пакетами, BepInEx, пакеты
+**[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** скрипт поставит сам, если его нет (для сборки APK нужен только .NET 8). Всё остальное (AssetRipper, Python с пакетами, BepInEx, пакеты
 NuGet, встроенные шейдеры Unity) сборщик скачает сам, каждое из первоисточника.
 
 ## 1. Установите Unity 6000.3.17f1 с Android

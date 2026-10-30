@@ -162,6 +162,11 @@ on macOS `steamcmd` with Rosetta 2 and the game; the builder then fetches AssetR
 packages and Unity's built-in shaders, each from its original source. `adb` for installing on the headset comes with
 Unity's Android module.
 
+**Which .NET:** building the APK needs only the **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** (the builder), and the scripts install it
+themselves (macOS: `~/.dotnet`, Windows: `%LOCALAPPDATA%\Microsoft\dotnet`); an SDK you already have works too. The
+**[.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)** is only for compiling RepoXR.dll yourself ([`docs/build-repoxr.md`](docs/build-repoxr.md)),
+and `scripts/prepare-repoxr.sh` installs that one into `~/.dotnet10`.
+
 ### macOS
 
 ```bash
