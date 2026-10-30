@@ -99,6 +99,8 @@ Settings, multiplayer, files in the headset: [playing.md](playing.md). Controls:
 git pull
 ```
 
+Without Git: download the [code ZIP](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) again and unpack it over the old folder (the work folder `~/RepoQuest` keeps the game and the earlier build).
+
 ```bash
 CODE_ONLY=1 bash scripts/build-mac.sh
 ```

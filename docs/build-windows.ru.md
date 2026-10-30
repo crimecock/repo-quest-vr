@@ -96,6 +96,8 @@ git pull
 powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 ```
 
+Без Git: скачайте [код ZIP-архивом](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) заново, распакуйте поверх старой папки и запустите скрипт (рабочая папка `C:\RepoQuest` с прошлой сборкой остаётся).
+
 Когда R.E.P.O. обновится в Steam, сборке могут понадобиться правки в этом репозитории — загляните в issues.
 
 ## Если что-то не так

@@ -100,6 +100,8 @@ bash scripts/build-mac.sh
 git pull
 ```
 
+Без Git: скачайте [код ZIP-архивом](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) заново и распакуйте поверх старой папки (рабочая папка `~/RepoQuest` с игрой и прошлой сборкой остаётся).
+
 ```bash
 CODE_ONLY=1 bash scripts/build-mac.sh
 ```

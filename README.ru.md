@@ -159,6 +159,8 @@ cd repo-quest-vr
 bash scripts/build-mac.sh
 ```
 
+Без Git: распакуйте [код ZIP-архивом](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) и запустите скрипт из папки `repo-quest-vr-repo-0.5.0`.
+
 Скрипт скачает набор порта из [ветки `kit`](../../tree/kit) этого форка, игру через `steamcmd` (один раз спросит логин
 Steam; пароль уходит только в Steam), соберёт сборщик и APK и поставит его в шлем. Первая сборка — 1–1,5 часа.
 `GAME=/путь/к/REPO` — для уже скачанной копии, `--no-install` — только собрать.
@@ -177,6 +179,8 @@ git clone https://github.com/crimecock/repo-quest-vr.git
 cd repo-quest-vr
 powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 ```
+
+Без Git: распакуйте [код ZIP-архивом](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) и запустите скрипт из папки `repo-quest-vr-repo-0.5.0`.
 
 Пошаговая инструкция — подготовка шлема, параметры, частые проблемы: [`docs/build-windows.ru.md`](docs/build-windows.ru.md).
 

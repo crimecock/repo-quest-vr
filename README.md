@@ -163,6 +163,8 @@ cd repo-quest-vr
 bash scripts/build-mac.sh
 ```
 
+Without Git: unpack the [code ZIP](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) and run the script from the `repo-quest-vr-repo-0.5.0` folder.
+
 The script downloads the kit from this fork's [`kit` branch](../../tree/kit), the game through `steamcmd` (it asks for your
 Steam login once; the password goes only to Steam), builds the builder and the APK, and installs it on the headset.
 The first build takes 1–1.5 hours. Use `GAME=/path/to/REPO` for a copy you already have, `--no-install` to build only.
@@ -181,6 +183,8 @@ git clone https://github.com/crimecock/repo-quest-vr.git
 cd repo-quest-vr
 powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 ```
+
+Without Git: unpack the [code ZIP](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) and run the script from the `repo-quest-vr-repo-0.5.0` folder.
 
 Step-by-step guide with the headset setup, options and troubleshooting: [`docs/build-windows.md`](docs/build-windows.md).
 
