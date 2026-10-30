@@ -247,3 +247,8 @@ dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <рас�
 R.E.P.O. и её ассеты принадлежат semiwork. В репозитории только код порта; каждый собирает игру из своей копии.
 
 Лицензия **GNU GPL v3.0** ([LICENSE](LICENSE)), как у оригинального порта и RepoXR.
+
+---
+
+Оригинальный порт для R.E.P.O. 0.4.4.3 / Unity 2022.3, его README и заметки о том, как он устроен —
+**[Dobutsu/repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr)**.

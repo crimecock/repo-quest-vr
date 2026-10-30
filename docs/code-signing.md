@@ -1,5 +1,9 @@
 # Signing the builder (SignPath Foundation)
 
+> [!NOTE]
+> From the original port (Dobutsu, R.E.P.O. 0.4.4.3 / Unity 2022.3), kept for its design notes. For this fork on
+> 0.5.0 see the [README](../README.md) and [repo-0.5.0.md](repo-0.5.0.md).
+
 _Planned 2026-10-10._ `RepoQuestBuilder.exe` is unsigned, so Windows SmartScreen stops players with "Windows protected
 your PC" and they have to click "More info → Run anyway". SignPath Foundation signs open-source software for free with
 its own certificate. Its conditions (https://signpath.org/terms) shape what comes first.

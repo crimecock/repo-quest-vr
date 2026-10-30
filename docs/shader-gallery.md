@@ -1,5 +1,9 @@
 # Shader gallery: the port's shaders against the PC game's
 
+> [!NOTE]
+> From the original port (Dobutsu, R.E.P.O. 0.4.4.3 / Unity 2022.3), kept for its design notes. For this fork on
+> 0.5.0 see the [README](../README.md) and [repo-0.5.0.md](repo-0.5.0.md).
+
 The port cannot use the game's shaders: AssetRipper's free export has no shader code, so `scripts/generate_shaders.py`
 writes stand-ins from the properties, the parsed fixed-function state and, where someone read it, the DX11 bytecode
 (`scripts/shader_disasm.py`). Until now the stand-ins were checked by eye in the headset. The gallery is a mechanical

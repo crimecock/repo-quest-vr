@@ -254,9 +254,8 @@ your R.E.P.O. (Steam)
   └─ Unity 6000.3 (IL2CPP, OpenXR, Vulkan) ─► Android APK ─► Quest
 ```
 
-See the original project's design notes in [`docs/`](docs) ([`feasibility.md`](docs/feasibility.md),
-[`builder.md`](docs/builder.md)); they describe the 0.4.4.3 / Unity 2022.3 port, and
-[`docs/repo-0.5.0.md`](docs/repo-0.5.0.md) what changed for 0.5.0.
+What changed for 0.5.0: [`docs/repo-0.5.0.md`](docs/repo-0.5.0.md). The original port for R.E.P.O. 0.4.4.3 / Unity
+2022.3, with its own README and design notes: **[Dobutsu/repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr)**.
 
 ## Legal
 

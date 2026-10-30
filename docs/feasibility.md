@@ -1,5 +1,9 @@
 # REPO + RepoXR on a Meta Quest 3 without a PC: how realistic is it
 
+> [!NOTE]
+> From the original port (Dobutsu, R.E.P.O. 0.4.4.3 / Unity 2022.3), kept for its design notes. For this fork on
+> 0.5.0 see the [README](../README.md) and [repo-0.5.0.md](repo-0.5.0.md).
+
 _As of 2026-09-25. Game: R.E.P.O. v0.4.4.3 (Unity 2022.3.67f2). Mod: RepoXR v1.2.3._
 
 ## In short

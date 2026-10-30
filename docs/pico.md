@@ -1,5 +1,9 @@
 # Pico 4
 
+> [!NOTE]
+> From the original port (Dobutsu, R.E.P.O. 0.4.4.3 / Unity 2022.3), kept for its design notes. For this fork on
+> 0.5.0 see the [README](../README.md) and [repo-0.5.0.md](repo-0.5.0.md).
+
 The Pico build is the Quest build, converted. Nothing in the Unity project changes for Pico; the differences are one
 pipeline step after Unity and two runtime helpers that act on Pico.
 

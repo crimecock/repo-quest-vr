@@ -1,5 +1,9 @@
 # A public project: everyone builds the Quest version from their own copy of the game
 
+> [!NOTE]
+> From the original port (Dobutsu, R.E.P.O. 0.4.4.3 / Unity 2022.3), kept for its design notes. For this fork on
+> 0.5.0 see the [README](../README.md) and [repo-0.5.0.md](repo-0.5.0.md).
+
 Notes from 2026-09-26. The question: can the project go on GitHub so that other players build the Quest version from
 the R.E.P.O. files they bought on Steam and play, without infringing on the developers' rights? And can that be made
 really simple (put the game files in a folder, install the APK on the headset)?
