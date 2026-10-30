@@ -86,29 +86,15 @@ git-репозиторий), правите его `Source/`, потом `script
 
 После этого снова `bash scripts/prepare-repoxr.sh`.
 
-## 5. Положите её в набор и соберите APK
-
-Скрипт сборки распаковал текущий набор в `~/RepoQuest/kit-<версия>`. Скопируйте его, положите свою DLL, запакуйте и
-соберите APK с этим набором:
+## 5. Соберите APK со своей DLL
 
 ```bash
-rm -rf work/my-kit && cp -R ~/RepoQuest/kit-1.0.7-qc27 work/my-kit && rm -f work/my-kit/.zip-sha
+REPOXR_DLL=$PWD/work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll CODE_ONLY=1 bash scripts/build-mac.sh
 ```
 
-```bash
-cp work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll work/my-kit/prebuilt/repoxr/
-```
-
-```bash
-(cd work/my-kit && rm -f ../my-kit.zip && zip -qr ../my-kit.zip .)
-```
-
-```bash
-KIT_ZIP=$PWD/work/my-kit.zip KIT_SHA=$(shasum -a 256 work/my-kit.zip | cut -d' ' -f1) CODE_ONLY=1 bash scripts/build-mac.sh
-```
-
-`CODE_ONLY=1` берёт данные игры из вашей прошлой полной сборки (около 10 минут); если её не было — сборка полная.
-Следующий обычный `bash scripts/build-mac.sh` вернётся к официальному набору.
+Скрипт берёт текущий набор, копирует его в `~/RepoQuest/kit-<версия>-custom` с вашей RepoXR.dll в `prebuilt/repoxr/` и
+собирает APK из этой копии. `CODE_ONLY=1` берёт данные игры из вашей прошлой полной сборки (около 10 минут); если её не
+было — сборка полная. Следующая сборка без `REPOXR_DLL` снова берёт DLL из набора.
 
 Совсем новый набор (с пересборкой всех частей: RepoXR.Standalone, SteamShim, libopus, Android-ассеты RepoXR через Unity) —
 `scripts/make-kit.sh`; выпуск версии форка (набор в ветке `kit`, версии в скриптах сборки, тег, релиз на GitHub) —
@@ -116,6 +102,15 @@ KIT_ZIP=$PWD/work/my-kit.zip KIT_SHA=$(shasum -a 256 work/my-kit.zip | cut -d' '
 
 ## На Windows
 
-`scripts/prepare-repoxr.sh` — bash-скрипт. Ту же RepoXR.dll на Windows можно собрать из ПК-форка командой `dotnet build`
-([COMPILING.md](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/COMPILING.md)); своего набора `scripts/build-windows.ps1`
-пока не принимает.
+`scripts/prepare-repoxr.sh` — bash-скрипт. На Windows ту же RepoXR.dll собирают из ПК-форка и отдают скрипту сборки:
+
+1. Поставьте [.NET SDK 10](https://dotnet.microsoft.com/download/dotnet/10.0) и распакуйте архив «всё в одном»
+   ПК-форка в папку игры (сборке нужны его XR-библиотеки Unity 6).
+2. Соберите: `git clone https://github.com/crimecock/RepoXR.git -b repo-0.5.0`, потом в этой папке
+   `dotnet build RepoXR.sln -c Release -p:DebugSymbols=false -p:GamePath="<папка REPO>"`
+   ([COMPILING.md](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/COMPILING.md)). Мод правится там же, в `Source/`.
+3. Соберите с ней APK, в папке этого репозитория:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -CodeOnly -RepoXRDll <папка RepoXR>\bin\Release\netstandard2.1\RepoXR.dll
+```

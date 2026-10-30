@@ -86,29 +86,16 @@ as a git repository), edit its `Source/`, then `scripts/repoxr-patch.sh save <na
 
 Then `bash scripts/prepare-repoxr.sh` again.
 
-## 5. Put it into a kit and build the APK
-
-The build script has unpacked the current kit into `~/RepoQuest/kit-<version>`. Copy it, put your DLL in, zip it, and
-build the APK with that kit:
+## 5. Build the APK with your DLL
 
 ```bash
-rm -rf work/my-kit && cp -R ~/RepoQuest/kit-1.0.7-qc27 work/my-kit && rm -f work/my-kit/.zip-sha
+REPOXR_DLL=$PWD/work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll CODE_ONLY=1 bash scripts/build-mac.sh
 ```
 
-```bash
-cp work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll work/my-kit/prebuilt/repoxr/
-```
-
-```bash
-(cd work/my-kit && rm -f ../my-kit.zip && zip -qr ../my-kit.zip .)
-```
-
-```bash
-KIT_ZIP=$PWD/work/my-kit.zip KIT_SHA=$(shasum -a 256 work/my-kit.zip | cut -d' ' -f1) CODE_ONLY=1 bash scripts/build-mac.sh
-```
-
-`CODE_ONLY=1` reuses the game data of your last full build (about 10 minutes); without an earlier build it does a full
-one. The next plain `bash scripts/build-mac.sh` goes back to the official kit.
+The script takes the current kit, copies it to `~/RepoQuest/kit-<version>-custom` with your RepoXR.dll in
+`prebuilt/repoxr/`, and builds the APK from that copy. `CODE_ONLY=1` reuses the game data of your last full build
+(about 10 minutes); without an earlier build it does a full one. The next build without `REPOXR_DLL` uses the kit's own
+DLL again.
 
 A whole new kit (all its parts rebuilt: RepoXR.Standalone, SteamShim, libopus, RepoXR's Android assets with Unity) is
 `scripts/make-kit.sh`; a release of this fork (kit on the `kit` branch, versions in the build scripts, tag, GitHub
@@ -116,6 +103,17 @@ release) is `scripts/release-fork.sh` ([updating.md](updating.md#for-maintainers
 
 ## On Windows
 
-`scripts/prepare-repoxr.sh` is a bash script. The same RepoXR.dll builds on Windows from the PC fork with `dotnet build`
-([COMPILING.md](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/COMPILING.md)); `scripts/build-windows.ps1` has no
-option for your own kit yet.
+`scripts/prepare-repoxr.sh` is a bash script. On Windows, build the same RepoXR.dll from the PC fork, then give it to the
+Windows build script:
+
+1. Install the [.NET SDK 10](https://dotnet.microsoft.com/download/dotnet/10.0) and unpack the PC fork's all-in-one zip
+   into your game folder (the build needs its Unity 6 XR libraries).
+2. Build: `git clone https://github.com/crimecock/RepoXR.git -b repo-0.5.0`, then in that folder
+   `dotnet build RepoXR.sln -c Release -p:DebugSymbols=false -p:GamePath="<your REPO folder>"`
+   ([COMPILING.md](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/COMPILING.md)). Change `Source/` there to change
+   the mod.
+3. Build the APK with it, in this repository's folder:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -CodeOnly -RepoXRDll <RepoXR folder>\bin\Release\netstandard2.1\RepoXR.dll
+```

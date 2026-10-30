@@ -74,6 +74,7 @@ Options:
 | `-Unity "D:\Unity\6000.3.17f1"` | Unity folder (the one with `Editor\Unity.exe`) if it is elsewhere |
 | `-Workspace D:\RepoQuest` | Another work folder (ASCII path without spaces) |
 | `-NoInstall` | Build only; the APK is in `<work folder>\work\build` |
+| `-RepoXRDll <RepoXR.dll>` | Your own RepoXR.dll instead of the kit's ([build-repoxr.md](build-repoxr.md#on-windows)) |
 | `-CodeOnly` | Only the code changed (a new kit with new DLLs or patches): reuse the last APK's packed game data, about a third of the time. A full build when there is no earlier one |
 
 To speed it up, you can add the work folder to Windows Security exclusions (Virus & threat protection → Manage settings

@@ -5,6 +5,7 @@
 #   bash scripts/build-mac.sh --no-install   build only
 #   GAME=<folder with REPO_Data> bash scripts/build-mac.sh   use a copy of the game you already have
 #   FORCE=1 bash scripts/build-mac.sh        build even when the check of a new game version finds problems
+#   REPOXR_DLL=<RepoXR.dll> bash scripts/build-mac.sh   your own RepoXR.dll instead of the kit's (docs/build-repoxr.md)
 #   CODE_ONLY=1 bash scripts/build-mac.sh    only the code changed (a new kit's DLLs, patches): reuse the last APK's
 #                                            packed game data, ~10 minutes instead of ~35; full build if there is none
 #
@@ -77,6 +78,14 @@ if [ ! -f "$KIT/kit.json" ] || [ "$(cat "$KIT/.zip-sha" 2>/dev/null)" != "$KIT_S
     echo "$KIT_SHA" > "$KIT/.zip-sha"
 fi
 echo "   $KIT"
+if [ -n "${REPOXR_DLL:-}" ]; then
+    # Your own RepoXR.dll (scripts/prepare-repoxr.sh, or the PC fork's build): a copy of the kit with it
+    [ -f "$REPOXR_DLL" ] || die "REPOXR_DLL: $REPOXR_DLL not found"
+    rm -rf "$KIT-custom" && cp -R "$KIT" "$KIT-custom"
+    cp "$REPOXR_DLL" "$KIT-custom/prebuilt/repoxr/RepoXR.dll"
+    KIT="$KIT-custom"
+    echo "   with your RepoXR.dll: $REPOXR_DLL"
+fi
 
 say "R.E.P.O. (Windows version, your Steam copy)"
 if [ ! -f "$GAME/REPO_Data/Managed/Assembly-CSharp.dll" ]; then

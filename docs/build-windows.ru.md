@@ -74,6 +74,7 @@ powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 | `-Unity "D:\Unity\6000.3.17f1"` | Папка Unity (та, где `Editor\Unity.exe`), если она в другом месте |
 | `-Workspace D:\RepoQuest` | Другая рабочая папка (латиница, без пробелов) |
 | `-NoInstall` | Только собрать; APK будет в `<рабочая папка>\work\build` |
+| `-RepoXRDll <RepoXR.dll>` | Своя RepoXR.dll вместо той, что в наборе ([build-repoxr.ru.md](build-repoxr.ru.md#на-windows)) |
 | `-CodeOnly` | Поменялся только код (новый набор с новыми DLL или патчами): данные игры берутся из прошлого APK, сборка втрое быстрее. Если прошлой сборки нет — полная |
 
 Для скорости можно добавить рабочую папку в исключения Безопасности Windows (Защита от вирусов и угроз → Управление

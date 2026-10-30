@@ -82,6 +82,7 @@ Options:
 | `REPOQUEST_HOME=/path bash scripts/build-mac.sh` | Another work folder (ASCII path without spaces) |
 | `bash scripts/build-mac.sh --no-install` | Build only; the APK is in `~/RepoQuest/work/build` |
 | `CODE_ONLY=1 bash scripts/build-mac.sh` | Only the code changed (a new kit with new DLLs or patches): reuse the last APK's packed game data, about 10 minutes instead of 35. A full build when there is no earlier one |
+| `REPOXR_DLL=<RepoXR.dll> bash scripts/build-mac.sh` | Your own RepoXR.dll instead of the kit's ([build-repoxr.md](build-repoxr.md)) |
 | `FORCE=1 bash scripts/build-mac.sh` | Build even when the check of a new game version finds problems |
 
 ## 5. Play

@@ -83,6 +83,7 @@ bash scripts/build-mac.sh
 | `REPOQUEST_HOME=/путь bash scripts/build-mac.sh` | Другая рабочая папка (путь латиницей без пробелов) |
 | `bash scripts/build-mac.sh --no-install` | Только собрать; APK — в `~/RepoQuest/work/build` |
 | `CODE_ONLY=1 bash scripts/build-mac.sh` | Поменялся только код (новый набор с новыми DLL или патчами): данные игры берутся из прошлого APK, около 10 минут вместо 35. Если прошлой сборки нет — полная |
+| `REPOXR_DLL=<RepoXR.dll> bash scripts/build-mac.sh` | Своя RepoXR.dll вместо той, что в наборе ([build-repoxr.ru.md](build-repoxr.ru.md)) |
 | `FORCE=1 bash scripts/build-mac.sh` | Собрать, даже если проверка новой версии игры нашла проблемы |
 
 ## 5. Играйте

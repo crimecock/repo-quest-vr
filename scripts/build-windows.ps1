@@ -5,6 +5,8 @@ R.E.P.O. 0.5.0 in VR on a Meta Quest, standalone, built on Windows from your own
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -NoInstall
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -Game "D:\SteamLibrary\steamapps\common\REPO"
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -Force   (build even when the check of a new game version finds problems)
+    powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -RepoXRDll <RepoXR.dll>   (your own RepoXR.dll instead
+        of the kit's, docs/build-repoxr.md)
     powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -CodeOnly   (only the code changed: reuse the last
         APK's packed game data, about a third of the time; a full build when there is none)
 
@@ -25,6 +27,7 @@ param(
     [switch]$Force,
     [switch]$CodeOnly,
     [string]$Game,
+    [string]$RepoXRDll,
     [string]$Unity = "$env:ProgramFiles\Unity\Hub\Editor\6000.3.17f1",
     [string]$Workspace = "C:\RepoQuest"
 )
@@ -84,6 +87,16 @@ if (-not (Test-Path "$kit\kit.json") -or ((Get-Content "$kit\.zip-sha" -ErrorAct
     Set-Content "$kit\.zip-sha" $KitSha
 }
 Write-Host "   $kit"
+if ($RepoXRDll) {
+    # Your own RepoXR.dll (the PC fork's build, or scripts/prepare-repoxr.sh): a copy of the kit with it
+    if (-not (Test-Path $RepoXRDll)) { Die "-RepoXRDll: $RepoXRDll not found" }
+    $custom = "${kit}-custom"
+    if (Test-Path $custom) { Remove-Item -Recurse -Force $custom }
+    Copy-Item -Recurse $kit $custom
+    Copy-Item -Force $RepoXRDll "$custom\prebuilt\repoxr\RepoXR.dll"
+    $kit = $custom
+    Write-Host "   with your RepoXR.dll: $RepoXRDll"
+}
 
 Say "builder (QuestBuilder.Cli)"
 & dotnet build -c Release -nologo -v quiet "$Src\builder\QuestBuilder.Cli"
