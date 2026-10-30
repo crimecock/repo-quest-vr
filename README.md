@@ -29,11 +29,13 @@ Thanks to the people whose work this port stands on:
 > in-headset Steam login, the singleplayer lobby and the levels (head tracking, pointers, grabbing), and **multiplayer
 > works**. 1.0.7-qc22 (patch [`0029`](patches/repoxr/0029-whip-result-screen-aim-news-popup.patch)) brings the fixes
 > tested on PC: the whip's crack and fling by swinging the controller, level → shop no longer hanging on the result
-> screen, and the main menu's news popup no longer drawn as solid bars; still to check on the Quest. Vehicles are
-> still being checked. Known: visual glitches in the settings menus (toggles, sliders and similar look off; they still
-> work). Report problems with this fork [here](../../issues), not to Dobutsu or DaXcess.
+> screen, and the main menu's news popup no longer drawn as solid bars. 1.0.7-qc23 (patch
+> [`0030`](patches/repoxr/0030-settings-menus-controller-icons-text-tags.patch), the PC fork's alpha 4) fixes the
+> settings menus: the controller icons instead of `?`, `[move]` in the tutorial, the toggles, the *VR Settings* button.
+> Everything works on PC; qc22 and qc23 are still to check on the Quest. Report problems with this fork
+> [here](../../issues), not to Dobutsu or DaXcess.
 
-> **Updating:** if you have built an earlier version, a code-only build is enough for qc22 (about 6 minutes; the
+> **Updating:** if you have built an earlier version, a code-only build is enough for qc23 (about 6 minutes; the
 > game's data from your last full build is reused) — see [docs/updating.md](docs/updating.md#updating-to-a-newer-build-of-this-fork).
 
 > **On PC instead of Quest?** The RepoXR side of this port is also a BepInEx mod for the PC game:
@@ -47,13 +49,10 @@ Being worked on; none of them stops the game.
 
 | Issue | Notes |
 |---|---|
-| Settings menus look off: toggles can highlight the wrong option, sliders sit or move off their bar | The settings still work; 0.5.0's menus measure positions in screen units, RepoXR shows them in 3D (PC too) |
-| VR controls page (rebinding): `?` instead of the controller button icons | Rebinding itself works (PC too) |
-| Settings page: the *VR Settings* button can overlap the button next to it | Both buttons still work (PC too) |
 | No chat in singleplayer | As in R.E.P.O. 0.5.0 itself; works in multiplayer |
-| qc22's fixes (whip, level → shop, news popup) are tested on PC, not yet on the Quest | Same code as the PC fork's alpha 3 |
+| qc22's and qc23's fixes (whip, level → shop, news popup, settings menus, controller icons) are tested on PC, not yet on the Quest | Same code as the PC fork's alpha 4 |
 | Whip: fling only once it has caught something; sensitivity may need tuning | VR Settings → Input → *Whip Sideways / Crack Sensitivity* |
-| Not tested yet: riding vehicles properly, the shop mirror, the expression wheel, Pony, Sunstone Valley | Reports welcome |
+| Not tested yet: the shop mirror, the expression wheel, Pony, Sunstone Valley | Reports welcome |
 
 Full list and details: [docs/playing.md](docs/playing.md#known-issues).
 

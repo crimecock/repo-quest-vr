@@ -79,6 +79,11 @@
 #                                new one's instance (level -> shop hung on the result screen); the news popup's texts
 #                                are built again once it has grown (solid bars); ChatConfirm, no gamepad grab cursor
 #                                drift, PC defaults behind Plugin.IsQuest, translations optional
+#   0030-settings-menus-controller-icons-text-tags  the PC fork's alpha 4 (same code): RepoXR's icon sprite asset (made
+#                                with Unity 2022's TextMeshPro) gets its glyphs and a material back, so the controller
+#                                icons show instead of '?'; text tags ([move], ...) come from 0.5.0's InputGlyphs;
+#                                toggles compare their buttons in canvas space and take their labels from the buttons;
+#                                the VR Settings button no longer lands on Back
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"

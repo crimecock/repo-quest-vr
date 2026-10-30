@@ -113,14 +113,11 @@ uninstalled, see [install.md](install.md#reinstall-and-keep-the-data) to keep it
 
 ## Known issues
 
-- Visual glitches in the settings menus: toggles can highlight the wrong option, sliders can sit or move off their
-  bar. They still work. 0.5.0's menus measure positions in screen units; RepoXR shows them in 3D.
-- The VR controls page (rebinding) shows `?` instead of the controller button icons. Rebinding works.
-- On the settings page the *VR Settings* button can overlap the button next to it. Both work.
-- qc22's fixes (whip, level → shop, news popup) are tested on PC, not yet on the Quest.
+- qc22's and qc23's fixes (whip, level → shop, news popup, settings menus, controller icons) are tested on PC, not yet on
+  the Quest.
 - Whip: the fling works only once the whip has caught something. Sensitivity: VR Settings → Input → *Whip Sideways /
   Crack Sensitivity*.
-- Not tested yet: riding vehicles properly, the shop mirror, the expression wheel, Pony, Sunstone Valley.
+- Not tested yet: the shop mirror, the expression wheel, Pony, Sunstone Valley.
 - The chat exists only in multiplayer (as in R.E.P.O. 0.5.0 itself).
 
 ## When something is wrong

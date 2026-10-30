@@ -8,7 +8,14 @@ download the kit of their version. The original project's history is in
 
 ## Unreleased
 
-Kits 1.0.7-qc3 to qc22 are built and being tested on the headset; they are not on the `kit` branch yet.
+Kits 1.0.7-qc3 to qc23 are built and being tested on the headset; they are not on the `kit` branch yet.
+
+- **1.0.7-qc23: settings menus and controller icons** (RepoXR patch 0030, the same code as the PC fork's alpha 4,
+  tested there). RepoXR's controller icon sprite asset was made with Unity 2022's TextMeshPro; Unity 6's reads it
+  without glyphs and material, so every icon was a `?` or nothing: they are rebuilt when the bundle loads. 0.5.0 moved
+  the text tags (`[move]`, `[grab]` …) to `InputGlyphs`, and the tutorial showed `[move]`: they are read from there.
+  The toggles' selection box compared world positions (flipped on a menu in 3D) and RepoXR's toggles kept placeholder
+  labels; the *VR Settings* button no longer lands on *Back*. A code-only build is enough over qc22.
 
 - **1.0.7-qc22: the whip, level → shop, the news popup** (RepoXR patch 0029, the same code as the PC fork's alpha 3,
   tested there). The whip's crack and fling are mouse gestures in 0.5.0: while you hold it they now read how fast your
