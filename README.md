@@ -52,7 +52,7 @@ Being worked on; none of them stops the game.
 | No chat in singleplayer | As in R.E.P.O. 0.5.0 itself; works in multiplayer |
 | qc22's and qc23's fixes (whip, level → shop, news popup, settings menus, controller icons) are tested on PC, not yet on the Quest | Same code as the PC fork's alpha 4 |
 | Whip: fling only once it has caught something; sensitivity may need tuning | VR Settings → Input → *Whip Sideways / Crack Sensitivity* |
-| Not tested yet: the shop mirror, the expression wheel, Pony, Sunstone Valley | Reports welcome |
+| Not tested yet: the shop mirror; frame rate on the new level Sunstone Valley | Reports welcome |
 
 Full list and details: [docs/playing.md](docs/playing.md#known-issues).
 
