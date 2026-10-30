@@ -89,6 +89,11 @@
 #                                single-pass rendering (the Quest's default: both eyes would share one reflection) and
 #                                with VR Settings -> Rendering -> Shop Mirror off; RepoXR's toggles fetch their value
 #                                through their own event and put the selection box on their own buttons
+#   0032-tutorial-texts-quest-controller-scheme-render-mode  RepoXR's VR tutorial texts only in English (the
+#                                game's translated texts stay otherwise; built in on PC) and RepoXR's own text tags
+#                                ([MapGrabLeft], ...) replaced again; Quest 3 Touch Plus controllers, which no control
+#                                scheme names, match the Meta Quest scheme (the controls page said DISCONNECTED); Render
+#                                Mode in VR Settings
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"

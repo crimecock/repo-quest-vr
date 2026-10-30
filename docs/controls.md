@@ -6,10 +6,9 @@ RepoXR's default bindings (action map `VRInputs`, Meta Quest profile). They can 
 Controls* (RepoXR lists its actions there). For left-handed play, RepoXR's settings have *Left Hand Dominant*, which
 swaps the hands.
 
-> Written from RepoXR 1.2.3's code (default action map) and this port's changes (since 1.0.7-qc12: the menu is on the
-> left menu button, X mutes the microphone, vehicles follow the left stick). Confirmed on the headset with 1.0.7-qc21:
-> looking around, the pointer, grabbing and the menu button, in the menus, the lobby and the levels; vehicles and
-> weapons are still being checked.
+> RepoXR 1.2.3's default action map with this port's changes (since 1.0.7-qc12: the menu is on the left menu button, X
+> mutes the microphone, vehicles follow the left stick). Everything below works; rebinding works on the Quest 3 since
+> 1.0.7-qc27 (its Touch Plus controllers used to show as *DISCONNECTED*).
 
 ## Buttons
 
@@ -23,11 +22,11 @@ swaps the hands.
 | **Left menu button (≡)** | Menu (pause) |
 | **X** | Mute / unmute your microphone (multiplayer) |
 | **Y** | Reset height |
-| **Right stick left/right** | Turn (smooth by default; snap turns of 45° in RepoXR's settings) |
+| **Right stick left/right** | Turn (smooth by default; 45° snap turns: VR Settings → Input → *TurnProvider*) |
 | **Right stick up/down** | Holding an object: push or pull it; in menus and lists: scroll |
 | **Right stick, click** | Crouch |
 | **Right trigger** | Grab (grab beam) |
-| **Right grip** | Interact (doors, buttons, levers); horn on a scooter |
+| **Right grip** | Interact (doors, buttons, levers); fire a gun; horn on a scooter |
 | **A** | Jump |
 | **B** | Tumble |
 
@@ -52,6 +51,12 @@ of an inventory slot: with the game's *Settings → Gameplay → Item Unequip Au
 default) the item stays on the beam after you let go of the trigger, until you press it again; off, it falls as soon
 as you let go.
 
+## Tumble climbing
+
+Needs the **Tumble Climb** upgrade from the shop and some stamina. Press **B** (tumble), point at a wall or floor of
+the level (not at objects) within about 3 m and hold the **right trigger** to latch on. Right stick up/down pulls you in
+or lets go; swing by moving. You are pulled where your hand points.
+
 ## Weapons
 
 - **Guns** (pistol, shotgun, tranq gun, laser, revolver...): grab the gun with the beam and press the **right grip**
@@ -75,6 +80,13 @@ R.E.P.O. 0.5.0 has a scooter, the snow bike (Arctic) and the golf cart (Desert).
   drifts.
 - **Horn**: **right grip** on a scooter.
 - **Get off**: press the **right trigger** again.
+
+## Rebinding and free actions
+
+*Settings → Controls* lists RepoXR's actions: point at one, press the trigger, then press the new button. Some actions
+have no button by default and can be given one there: **Inventory 1–3** (take an item out of a slot), **Expression
+1–6** (play an expression directly), **Push To Talk**, **Chat Delete**. *Reset* in that page brings back the defaults.
+Hold / toggle under some actions (crouch, sprint, grab...) chooses whether the button has to be held.
 
 ## When you are dead
 

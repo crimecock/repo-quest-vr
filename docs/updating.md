@@ -14,7 +14,7 @@ a build.
 
 ## Updating to a newer build of this fork
 
-A new kit (for example 1.0.7-qc23 → qc24) only changes code most of the time: build again with
+A new kit (for example 1.0.7-qc24 → qc27) only changes code most of the time: build again with
 `CODE_ONLY=1 scripts/build-mac.sh` (Windows: `scripts/build-windows.ps1 -CodeOnly`). Unity reuses the game data packed
 by your last full build and rebuilds only the code: about 6 minutes instead of 30-35. The release notes say when a full
 build is needed (assets, the export or the Python scripts changed). Install the new APK over the old one: your saves,

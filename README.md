@@ -34,10 +34,13 @@ Thanks to the people whose work this port stands on:
 > settings menus: the controller icons instead of `?`, `[move]` in the tutorial, the toggles, the *VR Settings* button.
 > 1.0.7-qc24 (patch [`0031`](patches/repoxr/0031-shop-mirror-toggles.patch), alpha 5) makes the shop mirror work in VR
 > and fixes the toggles in the VR settings. On the Quest the mirror stays hidden by default ([why](docs/playing.md#the-shop-mirror)).
+> 1.0.7-qc27 (patch [`0032`](patches/repoxr/0032-tutorial-texts-quest-controller-scheme-render-mode.patch), alpha 6):
+> the controls page works on the Quest 3 (it said *DISCONNECTED*), *Render Mode* in VR Settings → Rendering, RepoXR's VR
+> tutorial texts in English.
 > **Everything works**: tested on PC, and the Quest builds the very same RepoXR code. Report problems with this fork
 > [here](../../issues), not to Dobutsu or DaXcess.
 
-> **Updating:** if you have built an earlier version, a code-only build is enough for qc24 (about 6 minutes; the
+> **Updating:** if you have built an earlier version, a code-only build is enough for qc27 (about 6 minutes; the
 > game's data from your last full build is reused) — see [docs/updating.md](docs/updating.md#updating-to-a-newer-build-of-this-fork).
 
 > **On PC instead of Quest?** The RepoXR side of this port is also a BepInEx mod for the PC game:
@@ -50,11 +53,28 @@ Thanks to the people whose work this port stands on:
 None right now: everything works on PC, and the Quest builds the same code. Good to know:
 
 - **The shop mirror is hidden on the Quest, on purpose**: with single-pass rendering (the Quest's default) both eyes
-  would share one reflection. It works with single-pass off, at a frame rate cost ([details](docs/playing.md#the-shop-mirror)).
+  would share one reflection. It works with *VR Settings → Rendering → Render Mode* set to Multipass, at a frame rate
+  cost ([details](docs/playing.md#the-shop-mirror)).
 - The whip flings only once it has caught something; its sensitivity is in VR Settings → Input → *Whip Sideways /
   Crack Sensitivity*.
 
 Details: [docs/playing.md](docs/playing.md#known-issues).
+
+### Controls
+
+| Quest controller | In game |
+|---|---|
+| Left stick · click · hold | Move · chat · expression wheel |
+| Left trigger · left grip | Sprint · rotate the held object |
+| **≡ (left menu button)** · X · Y | **Menu** · mute the microphone · reset height |
+| Right stick left/right · up/down · click | Turn · push/pull, scroll · crouch |
+| **Right trigger** | **Grab** (beam), click in menus, get on/off vehicles |
+| Right grip | Interact, fire a gun, horn |
+| A · B | Jump · tumble |
+
+Map at the shoulder (grip), flashlight at the head, inventory, weapons, the whip, vehicles, tumble climbing:
+[docs/controls.md](docs/controls.md). Rebind in *Settings → Controls*; free actions (Inventory 1–3, Expression 1–6,
+Push To Talk) can get a button there.
 
 The game is built **from your own copy of R.E.P.O.** on Steam. This repository and its releases contain no game files.
 **Do not share the APK** you build: it contains the game's files.

@@ -74,6 +74,8 @@ Bindings can be changed in the game: *Settings → Controls* lists RepoXR's VR a
 | Small Object Distance | 20 m | Props, valuables and items under 1.5 m are not drawn beyond this |
 | Room Distance | 0 m | Nothing is drawn beyond this; 0 = as far as the fog lets you see (no visible difference). Lower values hide far rooms for more speed |
 | Post Processing | off | The game's color grading, vignette, grain. Off is brighter and saves about 5 ms of GPU |
+| Render Mode | Single Pass | Both eyes in one pass. *Multipass* draws them one after the other: about 25 % slower, but the shop mirror shows. Restart the game after changing it |
+| Shop Mirror | on | The mirror next to the cosmetic machine (hidden anyway with Single Pass) |
 | FPS Counter | off | Frame rate low in the left of your view: FPS, average and slowest frame of the last half second (CPU and GPU times when the headset reports them). Green from 68 FPS, yellow from 50, red below |
 
 The game's own settings pages still apply where they make sense. R.E.P.O. 0.5.0 added **Item Unequip Auto Hold**
@@ -88,9 +90,9 @@ mirror needs a different picture for each eye, so in single-pass it would look w
 eyes one after the other (*multi-pass*) lets the port render a reflection for each eye, and then the mirror works, as
 on PC, but the whole game then costs a lot more: about 54 instead of 71 FPS on Manor.
 
-To try it anyway, set `SinglePassRendering = false` in `RepoXR/config/io.daxcess.repoxr.cfg` on the headset (see
-[Files on the headset](#files-on-the-headset)) and restart the game; *VR Settings → Rendering → Shop Mirror* turns the
-mirror off again.
+To try it anyway, set *VR Settings → Rendering → Render Mode* to **Multipass** and restart the game (or
+`SinglePassRendering = false` in `RepoXR/config/io.daxcess.repoxr.cfg` on the headset); *Shop Mirror* in the same page
+turns the mirror off again.
 
 ## Playing seated
 

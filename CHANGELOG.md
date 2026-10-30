@@ -8,7 +8,16 @@ download the kit of their version. The original project's history is in
 
 ## Unreleased
 
-Kits 1.0.7-qc3 to qc24 are built and being tested on the headset; they are not on the `kit` branch yet.
+Kits 1.0.7-qc3 to qc27 are built and being tested on the headset; they are not on the `kit` branch yet.
+
+- **1.0.7-qc27: controls on the Quest 3, Render Mode, tutorial texts** (RepoXR patch 0032, the PC fork's alpha 6;
+  checked on the headset). The Quest 3's Touch Plus controllers come through the XR input subsystem as
+  `XRInputV1::Oculus::MetaQuestTouchPlusControllerOpenXR`, which none of RepoXR's control schemes names: input worked,
+  but PlayerInput paired nothing and the controls page said *DISCONNECTED* (qc25 and qc26 were attempts). Now the
+  Meta Quest scheme takes any pair of XR controllers on the Quest, and the controls page falls back to it. *Render
+  Mode* (Single Pass / Multipass) is in VR Settings → Rendering. RepoXR's VR tutorial texts show in English (other
+  languages keep the game's translations), and RepoXR's own text tags (`[MapGrabLeft]`...) get controller icons again.
+  The controls are documented on the front page too. A code-only build is enough over qc24.
 
 - **1.0.7-qc24: the shop mirror, toggles** (RepoXR patch 0031, the same code as the PC fork's alpha 5, tested there).
   The shop mirror's reflection camera rendered as a stereo camera and the eye matrices replaced its reflected view: it
