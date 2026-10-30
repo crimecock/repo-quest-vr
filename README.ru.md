@@ -142,7 +142,7 @@
 | R.E.P.O. 0.5.0 | [Steam](https://store.steampowered.com/app/3241660/REPO/) | достаточно купить: Windows-версию скрипт скачает через `steamcmd` | установлена в Steam (скрипт найдёт её сам) |
 | Unity Hub и бесплатный аккаунт Unity | [unity.com/download](https://unity.com/download) | ✓ | ✓ |
 | Unity **6000.3.17f1** с **Android Build Support** (галочки **OpenJDK** и **Android SDK & NDK Tools**) | откройте в браузере `unityhub://6000.3.17f1/cf0352b38e81` — Unity Hub откроется на этой версии (скрипты тоже открывают его, если Unity нет) | ✓ | ✓ |
-| Git (или **Code → Download ZIP** на этой странице) | macOS: `xcode-select --install`; Windows: [Git для Windows](https://git-scm.com/download/win) | ✓ | ✓ |
+| Git (или код [ZIP-архивом](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip)) | macOS: `xcode-select --install`; Windows: [Git для Windows](https://git-scm.com/download/win) | ✓ | ✓ |
 | Режим разработчика на Quest | приложение Meta Horizon на телефоне, см. [инструкцию Meta](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/) | ✓ | ✓ |
 
 И ещё около 60 ГБ свободного места и кабель USB-C с передачей данных.

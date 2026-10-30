@@ -145,7 +145,7 @@ when something is wrong): [`docs/playing.md`](docs/playing.md). Controls: [`docs
 | R.E.P.O. 0.5.0 | [Steam](https://store.steampowered.com/app/3241660/REPO/) | owning it is enough: the script downloads the Windows version with `steamcmd` | installed in Steam (the script finds it) |
 | Unity Hub + a free Unity account | [unity.com/download](https://unity.com/download) | ✓ | ✓ |
 | Unity **6000.3.17f1** with **Android Build Support** (tick **OpenJDK** and **Android SDK & NDK Tools**) | open `unityhub://6000.3.17f1/cf0352b38e81` in the browser: Unity Hub opens on this version (the scripts open it too when Unity is missing) | ✓ | ✓ |
-| Git (or **Code → Download ZIP** on this page) | macOS: `xcode-select --install`; Windows: [Git for Windows](https://git-scm.com/download/win) | ✓ | ✓ |
+| Git (or the code as a [ZIP](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip)) | macOS: `xcode-select --install`; Windows: [Git for Windows](https://git-scm.com/download/win) | ✓ | ✓ |
 | Developer mode on the Quest | Meta Horizon app on the phone, see [Meta's guide](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/) | ✓ | ✓ |
 
 Plus about 60 GB of free disk space and a USB-C cable that carries data.

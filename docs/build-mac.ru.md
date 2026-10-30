@@ -44,7 +44,7 @@ git clone https://github.com/crimecock/repo-quest-vr.git
 cd repo-quest-vr
 ```
 
-Без Git: на странице репозитория **Code → Download ZIP**, распакуйте и перейдите в папку в Терминале (`cd`).
+Без Git: скачайте код ZIP-архивом — [repo-quest-vr-repo-0.5.0.zip](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) (то же, что **Code → Download ZIP** на странице репозитория; код этого форка, без файлов игры), распакуйте и перейдите в Терминале в папку `repo-quest-vr-repo-0.5.0` (`cd`). Обновиться потом — скачать архив заново (`git pull` работает только в клоне Git).
 
 ## 3. Подготовьте шлем
 

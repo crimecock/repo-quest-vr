@@ -44,7 +44,7 @@ git clone https://github.com/crimecock/repo-quest-vr.git
 cd repo-quest-vr
 ```
 
-Without Git: on the repository page click **Code → Download ZIP**, unpack it and `cd` into the folder in Terminal.
+Without Git: download the code as a ZIP — [repo-quest-vr-repo-0.5.0.zip](https://github.com/crimecock/repo-quest-vr/archive/refs/heads/repo-0.5.0.zip) (the same as **Code → Download ZIP** on the repository page; the code of this fork, no game files) — unpack it and `cd` into the `repo-quest-vr-repo-0.5.0` folder in Terminal. To update later, download it again (`git pull` needs a Git clone).
 
 ## 3. Prepare the headset
 
