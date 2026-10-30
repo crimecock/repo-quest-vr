@@ -8,7 +8,12 @@ download the kit of their version. The original project's history is in
 
 ## Unreleased
 
-Kits 1.0.7-qc3 to qc27 are built and being tested on the headset; they are not on the `kit` branch yet.
+Kit **1.0.7-qc27** is on the `kit` branch, and `scripts/build-mac.sh` and `scripts/build-windows.ps1` download it
+(they were still on qc2); qc3 to qc26 were test builds on the headset.
+
+- **Build docs:** what to install yourself (with links) and what the scripts download, on the front page; a new
+  step-by-step guide for macOS ([docs/build-mac.md](docs/build-mac.md)); links in the Windows guide and in
+  install.md; a link to the PC fork at the top of the front page.
 
 - **1.0.7-qc27: controls on the Quest 3, Render Mode, tutorial texts** (RepoXR patch 0032, the PC fork's alpha 6;
   checked on the headset). The Quest 3's Touch Plus controllers come through the XR input subsystem as

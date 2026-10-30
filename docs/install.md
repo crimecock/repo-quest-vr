@@ -8,7 +8,7 @@ The build scripts install the APK themselves at the end. If that step failed, or
 ## 1. Prepare the headset
 
 1. Turn on **developer mode** for the headset in the Meta Horizon app on your phone: Devices → your Quest → Headset
-   settings → Developer mode. You need it only once.
+   settings → Developer mode. You need it only once ([Meta's guide](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/): Meta asks you to join or create a free developer organization first).
 2. Connect the Quest to the computer with a USB-C cable that carries data. Some charging cables carry power only.
 3. Put the headset on. Allow **USB debugging** and tick "Always allow from this computer".
 4. Keep the headset awake during the install. A sleeping Quest accepts the APK but does not install it until it wakes.

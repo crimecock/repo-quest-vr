@@ -12,9 +12,9 @@ everything the app did, step by step.
 ## What you need
 
 - Windows 10/11 64-bit, 16 GB RAM, **about 60 GB free** on the drive with the work folder (`C:\RepoQuest` by default).
-- **R.E.P.O. 0.5.0** installed in Steam (the builder finds it in your Steam libraries).
-- A **Meta Quest** (made and tested on a Quest 3) in **developer mode**, and a USB cable.
-- **Unity Hub** and a free Unity account.
+- **R.E.P.O. 0.5.0** installed in [Steam](https://store.steampowered.com/app/3241660/REPO/) (the builder finds it in your Steam libraries).
+- A **Meta Quest** (made and tested on a Quest 3) in **developer mode** ([Meta's guide](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/)), and a USB-C cable that carries data.
+- **Unity Hub** ([unity.com/download](https://unity.com/download)) and a free Unity account.
 - [Git for Windows](https://git-scm.com/download/win), or download the code as a ZIP (below).
 
 The script installs the **.NET 8 SDK** itself if it is missing. The builder downloads everything else (AssetRipper,
@@ -22,7 +22,7 @@ Python with its packages, BepInEx, NuGet packages, Unity's built-in shaders), ea
 
 ## 1. Install Unity 6000.3.17f1 with Android
 
-Open this link in the browser (Unity Hub opens on the right version):
+Install [Unity Hub](https://unity.com/download) and sign in. Then open this link in the browser (Unity Hub opens on the right version):
 
 ```
 unityhub://6000.3.17f1/cf0352b38e81
@@ -45,7 +45,7 @@ Without Git: on the repository page click **Code → Download ZIP**, unpack it t
 
 ## 3. Prepare the headset
 
-1. Enable **developer mode** for the headset in the Meta Horizon app on your phone.
+1. Enable **developer mode** for the headset in the Meta Horizon app on your phone: Devices → your Quest → Headset settings → Developer mode. Meta asks you to join or create a (free) developer organization first; details in [Meta's guide](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/).
 2. Connect the Quest to the PC by USB and put it on: allow **USB debugging** (tick "always allow from this computer").
 
 ## 4. Build

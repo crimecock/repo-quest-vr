@@ -10,6 +10,12 @@ The original port (1.0.7) supports R.E.P.O. **0.4.4.3**, which ran on Unity 2022
 which moved to **Unity 6000.3**, and the original builder stops at the export step. This fork carries the whole port
 over to 0.5.0 and adds a few performance options.
 
+> [!TIP]
+> **Playing on PC?** The same RepoXR code, ported to 0.5.0, is a BepInEx mod for the Windows version of the game:
+> **[crimecock/RepoXR](https://github.com/crimecock/RepoXR)** (branch `repo-0.5.0`) —
+> [releases](https://github.com/crimecock/RepoXR/releases) (all-in-one zip), [install](https://github.com/crimecock/RepoXR#install-on-pc-repo-050--установка-на-пк),
+> [controls on PC](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/docs/controls.md).
+
 ## Credits
 
 Thanks to the people whose work this port stands on:
@@ -132,8 +138,22 @@ when something is wrong): [`docs/playing.md`](docs/playing.md). Controls: [`docs
 
 ## How to build
 
-You need R.E.P.O. 0.5.0 on Steam, **Unity 6000.3.17f1** with Android Build Support (OpenJDK, Android SDK & NDK), the
-.NET 8 SDK, about 60 GB of free disk space and a Quest in developer mode with a USB cable.
+**Install these yourself, once:**
+
+| What | Where | macOS | Windows |
+|---|---|---|---|
+| R.E.P.O. 0.5.0 | [Steam](https://store.steampowered.com/app/3241660/REPO/) | owning it is enough: the script downloads the Windows version with `steamcmd` | installed in Steam (the script finds it) |
+| Unity Hub + a free Unity account | [unity.com/download](https://unity.com/download) | ✓ | ✓ |
+| Unity **6000.3.17f1** with **Android Build Support** (tick **OpenJDK** and **Android SDK & NDK Tools**) | open `unityhub://6000.3.17f1/cf0352b38e81` in the browser: Unity Hub opens on this version (the scripts open it too when Unity is missing) | ✓ | ✓ |
+| Git (or **Code → Download ZIP** on this page) | macOS: `xcode-select --install`; Windows: [Git for Windows](https://git-scm.com/download/win) | ✓ | ✓ |
+| Developer mode on the Quest | Meta Horizon app on the phone, see [Meta's guide](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/) | ✓ | ✓ |
+
+Plus about 60 GB of free disk space and a USB-C cable that carries data.
+
+**The scripts download the rest themselves:** the .NET 8 SDK (if missing), this fork's kit (checked by SHA-256),
+on macOS `steamcmd` with Rosetta 2 and the game; the builder then fetches AssetRipper, Python and its packages, NuGet
+packages and Unity's built-in shaders, each from its original source. `adb` for installing on the headset comes with
+Unity's Android module.
 
 ### macOS
 
@@ -149,7 +169,7 @@ The first build takes 1–1.5 hours. Use `GAME=/path/to/REPO` for a copy you alr
 `CODE_ONLY=1` rebuilds only the code into the last APK (a new kit that changes DLLs or patches, not assets): Unity
 skips repacking the game's data, which is two thirds of a build, so it takes about 10 minutes instead of 35.
 
-If installing on the headset fails, or to install a build by hand: [`docs/install.md`](docs/install.md).
+Step by step, with the options and troubleshooting: [`docs/build-mac.md`](docs/build-mac.md). If installing on the headset fails, or to install a build by hand: [`docs/install.md`](docs/install.md).
 
 ### Windows
 

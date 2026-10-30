@@ -10,6 +10,12 @@
 перешла на **Unity 6000.3**, и сборщик автора останавливается на экспорте. Этот форк переносит весь порт на 0.5.0 и
 добавляет настройки производительности.
 
+> [!TIP]
+> **Играете на ПК?** Тот же код RepoXR, перенесённый на 0.5.0, — мод BepInEx для Windows-версии игры:
+> **[crimecock/RepoXR](https://github.com/crimecock/RepoXR)** (ветка `repo-0.5.0`) —
+> [релизы](https://github.com/crimecock/RepoXR/releases) (архив «всё в одном»), [установка](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/README.ru.md),
+> [управление на ПК](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/docs/controls.ru.md).
+
 ## Благодарности
 
 Спасибо авторам, на чьей работе стоит этот порт:
@@ -129,8 +135,21 @@
 
 ## Как собрать
 
-Нужны R.E.P.O. 0.5.0 в Steam, **Unity 6000.3.17f1** с Android Build Support (OpenJDK, Android SDK & NDK), .NET 8 SDK,
-около 60 ГБ свободного места и Quest в режиме разработчика с USB-кабелем.
+**Поставить самому, один раз:**
+
+| Что | Где | macOS | Windows |
+|---|---|---|---|
+| R.E.P.O. 0.5.0 | [Steam](https://store.steampowered.com/app/3241660/REPO/) | достаточно купить: Windows-версию скрипт скачает через `steamcmd` | установлена в Steam (скрипт найдёт её сам) |
+| Unity Hub и бесплатный аккаунт Unity | [unity.com/download](https://unity.com/download) | ✓ | ✓ |
+| Unity **6000.3.17f1** с **Android Build Support** (галочки **OpenJDK** и **Android SDK & NDK Tools**) | откройте в браузере `unityhub://6000.3.17f1/cf0352b38e81` — Unity Hub откроется на этой версии (скрипты тоже открывают его, если Unity нет) | ✓ | ✓ |
+| Git (или **Code → Download ZIP** на этой странице) | macOS: `xcode-select --install`; Windows: [Git для Windows](https://git-scm.com/download/win) | ✓ | ✓ |
+| Режим разработчика на Quest | приложение Meta Horizon на телефоне, см. [инструкцию Meta](https://developers.meta.com/horizon/documentation/native/android/mobile-device-setup/) | ✓ | ✓ |
+
+И ещё около 60 ГБ свободного места и кабель USB-C с передачей данных.
+
+**Остальное скрипты скачают сами:** .NET 8 SDK (если его нет), набор порта из этого форка (с проверкой SHA-256), на
+macOS — `steamcmd` с Rosetta 2 и саму игру; дальше сборщик скачивает AssetRipper, Python с пакетами, пакеты NuGet и
+встроенные шейдеры Unity, каждое из первоисточника. `adb` для установки в шлем есть в Android-модуле Unity.
 
 ### macOS
 
@@ -146,7 +165,7 @@ Steam; пароль уходит только в Steam), соберёт сбор
 `CODE_ONLY=1` пересобирает в последний APK только код (новый набор, где поменялись DLL или патчи, а не ассеты): Unity
 не перепаковывает данные игры — это две трети сборки, — и выходит около 10 минут вместо 35.
 
-Если установка в шлем не прошла или нужно поставить сборку вручную: [`docs/install.ru.md`](docs/install.ru.md).
+По шагам, с параметрами и частыми проблемами: [`docs/build-mac.ru.md`](docs/build-mac.ru.md). Если установка в шлем не прошла или нужно поставить сборку вручную: [`docs/install.ru.md`](docs/install.ru.md).
 
 ### Windows
 
