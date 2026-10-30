@@ -16,7 +16,7 @@ swaps the hands.
 | Controller | Action |
 |---|---|
 | **Left stick** | Move |
-| **Left stick, click** | Chat (multiplayer only: R.E.P.O. 0.5.0 has no chat in singleplayer) |
+| **Left stick, click** | Chat |
 | **Left stick, hold (0.3 s)** | Expression wheel |
 | **Left trigger** | Sprint |
 | **Left grip** | Rotate the held object (with the right stick) |

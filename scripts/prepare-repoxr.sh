@@ -84,6 +84,11 @@
 #                                icons show instead of '?'; text tags ([move], ...) come from 0.5.0's InputGlyphs;
 #                                toggles compare their buttons in canvas space and take their labels from the buttons;
 #                                the VR Settings button no longer lands on Back
+#   0031-shop-mirror-toggles  the PC fork's alpha 5 (same code): the shop mirror's reflection camera renders mono, once
+#                                per eye from the eye's reflected pose (it rendered as a stereo camera); hidden with
+#                                single-pass rendering (the Quest's default: both eyes would share one reflection) and
+#                                with VR Settings -> Rendering -> Shop Mirror off; RepoXR's toggles fetch their value
+#                                through their own event and put the selection box on their own buttons
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"

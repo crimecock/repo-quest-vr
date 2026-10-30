@@ -8,7 +8,14 @@ download the kit of their version. The original project's history is in
 
 ## Unreleased
 
-Kits 1.0.7-qc3 to qc23 are built and being tested on the headset; they are not on the `kit` branch yet.
+Kits 1.0.7-qc3 to qc24 are built and being tested on the headset; they are not on the `kit` branch yet.
+
+- **1.0.7-qc24: the shop mirror, toggles** (RepoXR patch 0031, the same code as the PC fork's alpha 5, tested there).
+  The shop mirror's reflection camera rendered as a stereo camera and the eye matrices replaced its reflected view: it
+  now renders mono, once for each eye. On the Quest the mirror is hidden by default: with single-pass rendering both
+  eyes would share one reflection (it works with `SinglePassRendering = false`, at a frame rate cost);
+  *VR Settings → Rendering → Shop Mirror* turns it off. RepoXR's own toggles show the selected option again. A
+  code-only build is enough over qc23.
 
 - **1.0.7-qc23: settings menus and controller icons** (RepoXR patch 0030, the same code as the PC fork's alpha 4,
   tested there). RepoXR's controller icon sprite asset was made with Unity 2022's TextMeshPro; Unity 6's reads it

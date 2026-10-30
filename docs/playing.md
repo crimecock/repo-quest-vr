@@ -80,6 +80,18 @@ The game's own settings pages still apply where they make sense. R.E.P.O. 0.5.0 
 (*Settings → Gameplay*, on by default): an item you take out of an inventory slot stays on the beam after you let go
 of the trigger, until you press it again. Turn it off to have it fall as soon as you let go.
 
+## The shop mirror
+
+R.E.P.O. 0.5.0 has a mirror next to the cosmetic machine in the shop. On the Quest it is **hidden by default**, on
+purpose. The Quest draws both eyes in one pass (*single-pass*), and the game's mirror has one reflection picture; a
+mirror needs a different picture for each eye, so in single-pass it would look wrong in at least one eye. Drawing the
+eyes one after the other (*multi-pass*) lets the port render a reflection for each eye, and then the mirror works, as
+on PC, but the whole game then costs a lot more: about 54 instead of 71 FPS on Manor.
+
+To try it anyway, set `SinglePassRendering = false` in `RepoXR/config/io.daxcess.repoxr.cfg` on the headset (see
+[Files on the headset](#files-on-the-headset)) and restart the game; *VR Settings → Rendering → Shop Mirror* turns the
+mirror off again.
+
 ## Playing seated
 
 Sit the way you will play and press **Y**: your current head height becomes standing height. Turn off **Roomscale
@@ -113,14 +125,10 @@ uninstalled, see [install.md](install.md#reinstall-and-keep-the-data) to keep it
 
 ## Known issues
 
-- qc22's and qc23's fixes (whip, level → shop, news popup, settings menus, controller icons) are tested on PC, not yet on
-  the Quest.
 - Whip: the fling works only once the whip has caught something. Sensitivity: VR Settings → Input → *Whip Sideways /
   Crack Sensitivity*.
-- The shop mirror (next to the cosmetic machine) shows a garbled reflection: the game renders one flat reflection per
-  frame, not one per eye.
+- The shop mirror is hidden by default: see [The shop mirror](#the-shop-mirror).
 - Not tested yet: the frame rate on the new level Sunstone Valley.
-- The chat exists only in multiplayer (as in R.E.P.O. 0.5.0 itself).
 
 ## When something is wrong
 

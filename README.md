@@ -32,10 +32,12 @@ Thanks to the people whose work this port stands on:
 > screen, and the main menu's news popup no longer drawn as solid bars. 1.0.7-qc23 (patch
 > [`0030`](patches/repoxr/0030-settings-menus-controller-icons-text-tags.patch), the PC fork's alpha 4) fixes the
 > settings menus: the controller icons instead of `?`, `[move]` in the tutorial, the toggles, the *VR Settings* button.
-> Everything works on PC; qc22 and qc23 are still to check on the Quest. Report problems with this fork
+> 1.0.7-qc24 (patch [`0031`](patches/repoxr/0031-shop-mirror-toggles.patch), alpha 5) makes the shop mirror work in VR
+> and fixes the toggles in the VR settings. On the Quest the mirror stays hidden by default ([why](docs/playing.md#the-shop-mirror)).
+> **Everything works**: tested on PC, and the Quest builds the very same RepoXR code. Report problems with this fork
 > [here](../../issues), not to Dobutsu or DaXcess.
 
-> **Updating:** if you have built an earlier version, a code-only build is enough for qc23 (about 6 minutes; the
+> **Updating:** if you have built an earlier version, a code-only build is enough for qc24 (about 6 minutes; the
 > game's data from your last full build is reused) — see [docs/updating.md](docs/updating.md#updating-to-a-newer-build-of-this-fork).
 
 > **On PC instead of Quest?** The RepoXR side of this port is also a BepInEx mod for the PC game:
@@ -49,10 +51,8 @@ Being worked on; none of them stops the game.
 
 | Issue | Notes |
 |---|---|
-| No chat in singleplayer | As in R.E.P.O. 0.5.0 itself; works in multiplayer |
-| qc22's and qc23's fixes (whip, level → shop, news popup, settings menus, controller icons) are tested on PC, not yet on the Quest | Same code as the PC fork's alpha 4 |
 | Whip: fling only once it has caught something; sensitivity may need tuning | VR Settings → Input → *Whip Sideways / Crack Sensitivity* |
-| The shop mirror (next to the cosmetic machine) shows a garbled reflection | The game renders one flat reflection per frame, not one per eye (PC too) |
+| The shop mirror (next to the cosmetic machine) is hidden | On purpose: with single-pass rendering both eyes would share one reflection. It works with single-pass off, at a frame rate cost ([details](docs/playing.md#the-shop-mirror)) |
 | Not tested yet: frame rate on the new level Sunstone Valley | Reports welcome |
 
 Full list and details: [docs/playing.md](docs/playing.md#known-issues).
