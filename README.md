@@ -18,7 +18,6 @@ Thanks to the people whose work this port stands on:
   Quest port this fork is based on ([ko-fi](https://ko-fi.com/dobutsu)).
 - **[DaXcess](https://github.com/DaXcess)**: [RepoXR](https://github.com/DaXcess/RepoXR) and
   [RepoXR-Unity](https://github.com/DaXcess/RepoXR-Unity), the VR mod everything is built on.
-- **semiwork**: [R.E.P.O.](https://store.steampowered.com/app/3241660/REPO/)
 - [SteamKit2](https://github.com/SteamRE/SteamKit), [AssetRipper](https://github.com/AssetRipper/AssetRipper),
   [BepInEx](https://github.com/BepInEx/BepInEx), [HarmonyX](https://github.com/BepInEx/HarmonyX),
   [Opus](https://opus-codec.org/), and the [needle-mirror](https://github.com/needle-mirror) package mirrors used to

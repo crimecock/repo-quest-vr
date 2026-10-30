@@ -18,7 +18,6 @@
   на котором основан этот форк ([ko-fi](https://ko-fi.com/dobutsu)).
 - **[DaXcess](https://github.com/DaXcess)** — [RepoXR](https://github.com/DaXcess/RepoXR) и
   [RepoXR-Unity](https://github.com/DaXcess/RepoXR-Unity), VR-мод, на котором построено всё.
-- **semiwork** — [R.E.P.O.](https://store.steampowered.com/app/3241660/REPO/)
 - [SteamKit2](https://github.com/SteamRE/SteamKit), [AssetRipper](https://github.com/AssetRipper/AssetRipper),
   [BepInEx](https://github.com/BepInEx/BepInEx), [HarmonyX](https://github.com/BepInEx/HarmonyX),
   [Opus](https://opus-codec.org/), зеркала пакетов [needle-mirror](https://github.com/needle-mirror).
