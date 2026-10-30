@@ -191,6 +191,21 @@ The command-line builder with the unzipped kit from the [`kit` branch](../../tre
 dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <unzipped kit> --game <folder with REPO_Data> --workspace <work folder> --unity <Unity 6000.3.17f1 folder> --headset quest
 ```
 
+### What gets built where
+
+```
+your Steam copy of R.E.P.O. 0.5.0 ─┐
+the kit (kit branch): scripts,     ├─ scripts/build-mac.sh / build-windows.ps1 ─► APK on the Quest
+  Unity tooling, ready-made DLLs  ─┘   (.NET 8 builder, AssetRipper, Unity 6000.3.17f1)
+  RepoXR.dll, RepoXR.Standalone,
+  SteamShim
+```
+
+You never compile RepoXR (the VR mod) to play: its DLL comes ready-made in the kit, and the scripts bake it into the
+game's code. It is built from DaXcess's RepoXR 1.2.3 plus [`patches/repoxr`](patches/repoxr) with `scripts/prepare-repoxr.sh`
+(.NET 10), and has the same code as the [PC fork](https://github.com/crimecock/RepoXR)'s release. To change it or
+rebuild it yourself: [`docs/build-repoxr.md`](docs/build-repoxr.md).
+
 ## When R.E.P.O. updates
 
 The build scripts notice a game version the kit was not tested with and check it first, in minutes and without Unity

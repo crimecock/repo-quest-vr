@@ -6,6 +6,14 @@
 сборки скачивают набор своей версии. История исходного проекта — в
 [Dobutsu/repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr/releases).
 
+## Готовится
+
+- **RepoXR.dll снова собирается из этого репозитория** (чтобы менять RepoXR; игроки берут готовую DLL из набора):
+  патч RepoXR 0033 переводит проект RepoXR на вашу Windows-копию R.E.P.O. 0.5.0 и XR-пакеты Unity 6 вместо 0.4.4 и
+  Unity 2022 из NuGet, а `scripts/prepare-repoxr.sh` берёт .NET 10 SDK (ставит в `~/.dotnet10`, если его нет). Код
+  получается тот же, что у DLL из qc27. По шагам — [docs/build-repoxr.ru.md](docs/build-repoxr.ru.md); что где
+  собирается — на главной.
+
 ## 1.0.7-qc27
 
 Набор **1.0.7-qc27** лежит в ветке `kit`, и его скачивают `scripts/build-mac.sh` и `scripts/build-windows.ps1`

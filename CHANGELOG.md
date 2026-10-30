@@ -6,6 +6,14 @@ Releases of this fork. Each release is a kit (`kit` branch) plus the matching co
 download the kit of their version. The original project's history is in
 [Dobutsu/repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr/releases).
 
+## Unreleased
+
+- **RepoXR.dll builds from this repository again** (for changing RepoXR; players use the kit's ready-made DLL):
+  RepoXR patch 0033 makes RepoXR's project compile against your Windows copy of R.E.P.O. 0.5.0 and the Unity 6 XR
+  packages instead of NuGet's 0.4.4 and Unity 2022, and `scripts/prepare-repoxr.sh` uses the .NET 10 SDK (installed into
+  `~/.dotnet10` if missing). The result has the same code as qc27's DLL. Step by step:
+  [docs/build-repoxr.md](docs/build-repoxr.md); what gets built where: on the front page.
+
 ## 1.0.7-qc27
 
 Kit **1.0.7-qc27** is on the `kit` branch, and `scripts/build-mac.sh` and `scripts/build-windows.ps1` download it

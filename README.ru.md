@@ -187,6 +187,21 @@ powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <распакованный набор> --game <папка с REPO_Data> --workspace <рабочая папка> --unity <папка Unity 6000.3.17f1> --headset quest
 ```
 
+### Что где собирается
+
+```
+ваша копия R.E.P.O. 0.5.0 из Steam ─┐
+набор (ветка kit): скрипты,         ├─ scripts/build-mac.sh / build-windows.ps1 ─► APK на Quest
+  Unity-инструменты, готовые DLL   ─┘   (сборщик на .NET 8, AssetRipper, Unity 6000.3.17f1)
+  RepoXR.dll, RepoXR.Standalone,
+  SteamShim
+```
+
+Чтобы играть, RepoXR (VR-мод) компилировать не нужно: его DLL лежит в наборе готовой, и скрипты встраивают её в код
+игры. Она собирается из RepoXR 1.2.3 от DaXcess и [`patches/repoxr`](patches/repoxr) скриптом `scripts/prepare-repoxr.sh`
+(.NET 10), и её код совпадает с релизом [ПК-форка](https://github.com/crimecock/RepoXR). Поменять её или собрать
+самому: [`docs/build-repoxr.ru.md`](docs/build-repoxr.ru.md).
+
 ## Когда R.E.P.O. обновляется
 
 Скрипты сборки замечают версию игры, с которой набор не проверялся, и сначала проверяют её — за минуты и без Unity

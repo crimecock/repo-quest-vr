@@ -59,7 +59,7 @@ hashes for all 32,502 project files (excluding Library). The baked DLLs, `addres
 `shader-states.json` matched too, and the dependencies downloaded from their publishers' sites matched what was in
 `work/` byte for byte.
 
-**The kit** (`scripts/make-kit.sh` → `work/kit`): `scripts/`, `unity-tools/` and what we build from source: RepoXR.dll
+**The kit** (`scripts/make-kit.sh` → `work/kit`; RepoXR.dll alone: [build-repoxr.md](build-repoxr.md)): `scripts/`, `unity-tools/` and what we build from source: RepoXR.dll
 with patches, RepoXR.Standalone.dll, SteamShim and SteamKit2, libopus, RepoXR's Android assets. Plus kit.json, the
 Python lock file and licenses. It contains no game files: `make-kit.sh` checks that. In a release, the kit is embedded
 in the exe as the `kit.zip` resource and unpacked to `<workspace>\kit\<version>`.

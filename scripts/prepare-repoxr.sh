@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 # RepoXR as the Quest build uses it: external/RepoXR (v1.2.3, left untouched) plus patches/repoxr/*.patch, built in
-# work/repoxr-src.
+# work/repoxr-src. Step by step: docs/build-repoxr.md.
 #   scripts/prepare-repoxr.sh   -> work/repoxr-src/bin/Release/netstandard2.1/RepoXR.dll
+#   GAME=<folder with REPO_Data>   the Windows version of R.E.P.O. 0.5.0 (default ~/RepoQuest/game, where
+#                                  scripts/build-mac.sh downloads it); RepoXR compiles against its code
+# Needs the .NET 10 SDK (RepoXR uses C# 14): DOTNET=<dotnet>, else ~/.dotnet10 or ~/.dotnet if they have it, else it is
+# installed into ~/.dotnet10. The Unity 6 XR packages to compile against come from the PC fork's alpha 6 release
+# (downloaded once, SHA-256 checked, into work/downloads).
 # Patches (in order):
 #   0001-head-bob-setting  "Head Bob" slider in RepoXR's Gameplay settings (0-100%, default 0% = off; upstream is 25%)
 #   0002-pixel-lights-setting  "Pixel Lights" slider in Rendering (per-object pixel light limit, default 1)
@@ -94,19 +99,59 @@
 #                                ([MapGrabLeft], ...) replaced again; Quest 3 Touch Plus controllers, which no control
 #                                scheme names, match the Meta Quest scheme (the controls page said DISCONNECTED); Render
 #                                Mode in VR Settings
+#   0033-build-against-the-game-folder  RepoXR.csproj takes R.E.P.O. 0.5.0, Unity 6, Photon, Steamworks (GamePath) and
+#                                the Unity 6 XR packages (XRDeps) from disk instead of NuGet's 0.4.4 and Unity 2022
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 src="$root/work/repoxr-src"
-dotnet="${DOTNET:-$HOME/.dotnet/dotnet}"
+game="${GAME:-$HOME/RepoQuest/game}"
+downloads="$root/work/downloads"
+# Unity 6 XR packages built for Windows: the PC fork's release carries them (compile-time references only)
+xr_url="https://github.com/crimecock/RepoXR/releases/download/v1.2.3-repo0.5.0-alpha.6/RepoXR-repo0.5.0-alpha.6.zip"
+xr_sha="6ddc79a00e3035ab715461763d5eefc65c3d0ba5ac7b61a704fc09319c6291be"
+xr="$downloads/repoxr-xr-unity6"
+
+die() { echo "ERROR: $*" >&2; exit 1; }
+sha256() { if command -v shasum >/dev/null; then shasum -a 256 "$1"; else sha256sum "$1"; fi | cut -d' ' -f1; }
+
+[ -f "$root/external/RepoXR/RepoXR.csproj" ] || die "external/RepoXR is empty: git submodule update --init external/RepoXR"
+[ -f "$game/REPO_Data/Managed/Assembly-CSharp.dll" ] || die "R.E.P.O. not found in $game: run scripts/build-mac.sh once (it downloads the game there) or pass GAME=<folder with REPO_Data>"
+
+# The .NET 10 SDK
+has10() { [ -n "$1" ] && [ -x "$1" ] && "$1" --list-sdks 2>/dev/null | grep -q '^1[0-9]\.'; }
+dotnet=""
+for candidate in "${DOTNET:-}" "$HOME/.dotnet10/dotnet" "$HOME/.dotnet/dotnet" "$(command -v dotnet || true)"; do
+    if has10 "$candidate"; then dotnet="$candidate"; break; fi
+done
+if [ -z "$dotnet" ]; then
+    echo "installing the .NET 10 SDK into ~/.dotnet10 (RepoXR is written in C# 14)"
+    mkdir -p "$downloads"
+    curl -fsSL https://dot.net/v1/dotnet-install.sh -o "$downloads/dotnet-install.sh"
+    bash "$downloads/dotnet-install.sh" --channel 10.0 --install-dir "$HOME/.dotnet10" >/dev/null
+    dotnet="$HOME/.dotnet10/dotnet"
+    has10 "$dotnet" || die "the .NET 10 SDK did not install; install it from https://dotnet.microsoft.com/download/dotnet/10.0 and pass DOTNET="
+fi
+export DOTNET_CLI_TELEMETRY_OPTOUT=1 DOTNET_NOLOGO=1
+
+# The Unity 6 XR packages
+if [ ! -f "$xr/Unity.XR.OpenXR.dll" ] || [ "$(cat "$xr/.sha" 2>/dev/null)" != "$xr_sha" ]; then
+    mkdir -p "$downloads" "$xr"
+    curl -fsSL "$xr_url" -o "$downloads/repoxr-alpha6.zip"
+    [ "$(sha256 "$downloads/repoxr-alpha6.zip")" = "$xr_sha" ] || die "the PC fork's release zip is damaged (SHA-256)"
+    unzip -q -o -j "$downloads/repoxr-alpha6.zip" 'BepInEx/plugins/RepoXR/RuntimeDeps/*' -d "$xr"
+    echo "$xr_sha" > "$xr/.sha"
+fi
 
 # Fresh sources on every run; bin/ and obj/ stay for incremental builds
 mkdir -p "$src"
 rsync -a --delete --exclude .git --exclude bin --exclude obj "$root/external/RepoXR/" "$src/"
 for patch in "$root"/patches/repoxr/*.patch; do
-    patch -p1 --forward --silent -d "$src" < "$patch" || { echo "patch failed: $(basename "$patch")" >&2; exit 1; }
+    patch -p1 --forward --silent -d "$src" < "$patch" || die "patch failed: $(basename "$patch")"
     echo "applied $(basename "$patch")"
 done
 
-"$dotnet" build -c Release "$src/RepoXR.csproj" -v quiet -nologo >/dev/null
+# DebugSymbols=false as the releases: the same code (IL) as the kit's RepoXR.dll and the PC fork's release
+"$dotnet" build -c Release -v quiet -nologo -clp:ErrorsOnly "$src/RepoXR.csproj" \
+    -p:DebugSymbols=false -p:WarningLevel=0 -p:GamePath="$game" -p:XRDeps="$xr" || die "RepoXR did not build (errors above)"
 echo "RepoXR built: $src/bin/Release/netstandard2.1/RepoXR.dll"

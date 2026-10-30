@@ -67,7 +67,7 @@ scripts/repoxr-patch.sh start          # work/repoxr-edit: RepoXR + все па�
 scripts/repoxr-patch.sh save repo-0.5.1   # -> patches/repoxr/0010-repo-0.5.1.patch
 ```
 
-Впишите новый патч в заголовок `scripts/prepare-repoxr.sh`. Соберите RepoXR против нового кода игры, затем
+Впишите новый патч в заголовок `scripts/prepare-repoxr.sh`. Соберите RepoXR против нового кода игры ([build-repoxr.ru.md](build-repoxr.ru.md)), затем
 RepoXR.Standalone и SteamShim, и прогоняйте проверку с этими DLL в наборе, пока ошибок не останется.
 
 ### 3. Собрать и проверить

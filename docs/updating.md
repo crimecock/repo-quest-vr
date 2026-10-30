@@ -68,7 +68,7 @@ scripts/repoxr-patch.sh start          # work/repoxr-edit: RepoXR + every patch 
 scripts/repoxr-patch.sh save repo-0.5.1   # -> patches/repoxr/0010-repo-0.5.1.patch
 ```
 
-List the new patch in the header of `scripts/prepare-repoxr.sh`. Build RepoXR against the new game code, then
+List the new patch in the header of `scripts/prepare-repoxr.sh`. Build RepoXR against the new game code ([build-repoxr.md](build-repoxr.md)), then
 RepoXR.Standalone and SteamShim, and run the check with those DLLs in the kit until it reports no failures.
 
 ### 3. Build and test
