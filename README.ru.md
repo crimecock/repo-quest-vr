@@ -227,6 +227,9 @@ dotnet run -c Release --project builder/QuestBuilder.Cli -- build --kit <рас�
 отчётом. Что делать дальше и как выпускается релиз: [`docs/updating.ru.md`](docs/updating.ru.md). Релизы:
 [`CHANGELOG.ru.md`](CHANGELOG.ru.md).
 
+**Выпуск новой версии** (эта репа и ПК-форк: где живёт версия, что менять и в каком порядке):
+[`docs/releasing.ru.md`](docs/releasing.ru.md).
+
 ## Steam в шлеме
 
 Для игры по сети вход в Steam делается в самой игре, кнопкой **Steam** в главном меню. Шлем общается со Steam напрямую

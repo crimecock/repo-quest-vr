@@ -85,6 +85,8 @@ while the game starts: `adb logcat -c && adb logcat -s Unity AndroidRuntime CRAS
 
 ### 4. Release
 
+The full checklist for both repositories: [releasing.md](releasing.md).
+
 Add a `## <version>` section to both changelogs, [CHANGELOG.md](../CHANGELOG.md) and [CHANGELOG.ru.md](../CHANGELOG.ru.md) (the release notes are made from both), commit, then:
 
 ```bash

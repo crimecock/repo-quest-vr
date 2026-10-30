@@ -231,6 +231,9 @@ The build scripts notice a game version the kit was not tested with and check it
 fit. What maintainers do then, and how a release is made: [`docs/updating.md`](docs/updating.md). Releases:
 [`CHANGELOG.md`](CHANGELOG.md).
 
+**Releasing a new version** (both this repository and the PC fork: where the version lives, what to change, in which
+order): [`docs/releasing.md`](docs/releasing.md).
+
 ## Steam in the headset
 
 To play online, you log in to Steam inside the game, from the **Steam** button in the main menu. The headset then talks

@@ -70,4 +70,4 @@ the Unity tooling did not change.
 
 `scripts/release-fork.sh` makes a release from such DLLs: the kit on the `kit` branch, the version and SHA-256 in
 `scripts/build-mac.sh` and `scripts/build-windows.ps1`, the tag and the GitHub release
-([updating.md](updating.md#for-maintainers)).
+([releasing.md](releasing.md)).

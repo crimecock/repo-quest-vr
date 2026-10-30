@@ -69,4 +69,4 @@ KIT_ZIP=$PWD/work/kit-mine.zip KIT_SHA=$(shasum -a 256 work/kit-mine.zip | cut -
 ## 4. Выпустить (для тех, кто поддерживает форк)
 
 `scripts/release-fork.sh` делает выпуск из таких DLL: набор в ветку `kit`, версию и SHA-256 в `scripts/build-mac.sh` и
-`scripts/build-windows.ps1`, тег и релиз на GitHub ([updating.ru.md](updating.ru.md#тем-кто-поддерживает-форк)).
+`scripts/build-windows.ps1`, тег и релиз на GitHub ([releasing.ru.md](releasing.ru.md)).
