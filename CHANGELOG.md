@@ -13,6 +13,13 @@ download the kit of their version. The original project's history is in
   packages instead of NuGet's 0.4.4 and Unity 2022, and `scripts/prepare-repoxr.sh` uses the .NET 10 SDK (installed into
   `~/.dotnet10` if missing). The result has the same code as qc27's DLL. Step by step:
   [docs/build-repoxr.md](docs/build-repoxr.md); what gets built where: on the front page.
+- **Your own RepoXR.dll in the APK**: `REPOXR_DLL=<dll> bash scripts/build-mac.sh`, or `-RepoXRDll <dll>` on Windows
+  (the script uses a copy of the kit with it).
+- **The whole kit from scratch**: `scripts/make-kit.sh` fetches RepoXR 1.2.3 and BepInEx from `kit.json`'s pins, builds
+  RepoXR.Standalone against your copy of the game, libopus with Unity 6's NDK, and takes RepoXR's Android assets from
+  the current kit (`REBUILD_REPOXR_ASSETS=1` rebuilds them with Unity 2022.3.62f3). Checked: everything but the
+  compiled parts matches kit qc27, and those differ only by compiler and NDK version.
+  [docs/build-kit.md](docs/build-kit.md).
 
 ## 1.0.7-qc27
 

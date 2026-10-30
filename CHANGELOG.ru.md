@@ -13,6 +13,12 @@
   Unity 2022 из NuGet, а `scripts/prepare-repoxr.sh` берёт .NET 10 SDK (ставит в `~/.dotnet10`, если его нет). Код
   получается тот же, что у DLL из qc27. По шагам — [docs/build-repoxr.ru.md](docs/build-repoxr.ru.md); что где
   собирается — на главной.
+- **Своя RepoXR.dll в APK**: `REPOXR_DLL=<dll> bash scripts/build-mac.sh` или `-RepoXRDll <dll>` на Windows (скрипт
+  берёт копию набора с ней).
+- **Весь набор с нуля**: `scripts/make-kit.sh` сам скачивает RepoXR 1.2.3 и BepInEx по закреплённым в `kit.json` SHA,
+  собирает RepoXR.Standalone по вашей копии игры, libopus — NDK из Unity 6, а Android-ассеты RepoXR берёт из текущего
+  набора (`REBUILD_REPOXR_ASSETS=1` пересобирает их в Unity 2022.3.62f3). Проверено: всё, кроме компилируемых частей,
+  совпадает с набором qc27, а они отличаются только версией компилятора и NDK. [docs/build-kit.ru.md](docs/build-kit.ru.md).
 
 ## 1.0.7-qc27
 
