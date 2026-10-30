@@ -47,15 +47,14 @@ Thanks to the people whose work this port stands on:
 
 ### Known issues
 
-Being worked on; none of them stops the game.
+None right now: everything works on PC, and the Quest builds the same code. Good to know:
 
-| Issue | Notes |
-|---|---|
-| Whip: fling only once it has caught something; sensitivity may need tuning | VR Settings → Input → *Whip Sideways / Crack Sensitivity* |
-| The shop mirror (next to the cosmetic machine) is hidden | On purpose: with single-pass rendering both eyes would share one reflection. It works with single-pass off, at a frame rate cost ([details](docs/playing.md#the-shop-mirror)) |
-| Not tested yet: frame rate on the new level Sunstone Valley | Reports welcome |
+- **The shop mirror is hidden on the Quest, on purpose**: with single-pass rendering (the Quest's default) both eyes
+  would share one reflection. It works with single-pass off, at a frame rate cost ([details](docs/playing.md#the-shop-mirror)).
+- The whip flings only once it has caught something; its sensitivity is in VR Settings → Input → *Whip Sideways /
+  Crack Sensitivity*.
 
-Full list and details: [docs/playing.md](docs/playing.md#known-issues).
+Details: [docs/playing.md](docs/playing.md#known-issues).
 
 The game is built **from your own copy of R.E.P.O.** on Steam. This repository and its releases contain no game files.
 **Do not share the APK** you build: it contains the game's files.

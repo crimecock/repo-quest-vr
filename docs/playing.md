@@ -125,10 +125,11 @@ uninstalled, see [install.md](install.md#reinstall-and-keep-the-data) to keep it
 
 ## Known issues
 
+None right now: everything works on PC, and the Quest builds the same code. Good to know:
+
+- The shop mirror is hidden by default, on purpose: see [The shop mirror](#the-shop-mirror).
 - Whip: the fling works only once the whip has caught something. Sensitivity: VR Settings → Input → *Whip Sideways /
   Crack Sensitivity*.
-- The shop mirror is hidden by default: see [The shop mirror](#the-shop-mirror).
-- Not tested yet: the frame rate on the new level Sunstone Valley.
 
 ## When something is wrong
 
