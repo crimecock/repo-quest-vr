@@ -117,7 +117,9 @@ uninstalled, see [install.md](install.md#reinstall-and-keep-the-data) to keep it
   the Quest.
 - Whip: the fling works only once the whip has caught something. Sensitivity: VR Settings → Input → *Whip Sideways /
   Crack Sensitivity*.
-- Not tested yet: the shop mirror; the frame rate on the new level Sunstone Valley.
+- The shop mirror (next to the cosmetic machine) shows a garbled reflection: the game renders one flat reflection per
+  frame, not one per eye.
+- Not tested yet: the frame rate on the new level Sunstone Valley.
 - The chat exists only in multiplayer (as in R.E.P.O. 0.5.0 itself).
 
 ## When something is wrong
