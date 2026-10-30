@@ -5,8 +5,8 @@
 Everything after the APK is on the Quest: starting the game, controls, the VR settings, multiplayer, and what to
 send when something goes wrong. Building and installing: [README](../README.md), [install.md](install.md).
 
-> The 0.5.0 port is being tested on a Quest 3. Defaults and setting names below come from RepoXR's code and this
-> fork's patches; [repo-0.5.0.md](repo-0.5.0.md#repo-050s-new-features-in-vr) has what is confirmed in the headset.
+> Everything below works on a Quest 3 (1.0.7-qc27). Defaults and setting names come from RepoXR's code and this
+> fork's patches; what each 0.5.0 feature does in VR: [repo-0.5.0.md](repo-0.5.0.md#repo-050s-new-features-in-vr).
 
 ## Starting
 
@@ -88,7 +88,7 @@ R.E.P.O. 0.5.0 has a mirror next to the cosmetic machine in the shop. On the Que
 purpose. The Quest draws both eyes in one pass (*single-pass*), and the game's mirror has one reflection picture; a
 mirror needs a different picture for each eye, so in single-pass it would look wrong in at least one eye. Drawing the
 eyes one after the other (*multi-pass*) lets the port render a reflection for each eye, and then the mirror works, as
-on PC, but the whole game then costs a lot more: about 54 instead of 71 FPS on Manor.
+on PC, but the whole game then costs a lot more: the processor submits the scene once per eye, and the frame rate drops noticeably.
 
 To try it anyway, set *VR Settings → Rendering → Render Mode* to **Multipass** and restart the game (or
 `SinglePassRendering = false` in `RepoXR/config/io.daxcess.repoxr.cfg` on the headset); *Shop Mirror* in the same page
@@ -127,7 +127,9 @@ uninstalled, see [install.md](install.md#reinstall-and-keep-the-data) to keep it
 
 ## Known issues
 
-None right now: everything works on PC, and the Quest builds the same code. Good to know:
+Everything works: tested on PC, and the Quest builds the same code. Good to know:
+
+- One small issue: **the language page** (*Settings → Language*) shows only Text to Speech in VR, because the language buttons land outside the menu. The fix is ready and comes with the next build.
 
 - The shop mirror is hidden by default, on purpose: see [The shop mirror](#the-shop-mirror).
 - Whip: the fling works only once the whip has caught something. Sensitivity: VR Settings → Input → *Whip Sideways /

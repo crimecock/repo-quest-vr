@@ -31,7 +31,7 @@ Thanks to the people whose work this port stands on:
 - 0.5.0 port by **[crimecock](https://github.com/crimecock)**, made with
   [Claude Code](https://claude.com/claude-code).
 
-> **Status: testing.** The pipeline builds a 0.5.0 APK end to end. On a Quest 3, 1.0.7-qc21 plays: the menus, the
+> **Status: everything works (1.0.7-qc27).** The pipeline builds a 0.5.0 APK end to end. On a Quest 3, 1.0.7-qc21 plays: the menus, the
 > in-headset Steam login, the singleplayer lobby and the levels (head tracking, pointers, grabbing), and **multiplayer
 > works**. 1.0.7-qc22 (patch [`0029`](patches/repoxr/0029-whip-result-screen-aim-news-popup.patch)) brings the fixes
 > tested on PC: the whip's crack and fling by swinging the controller, level → shop no longer hanging on the result
@@ -46,17 +46,12 @@ Thanks to the people whose work this port stands on:
 > **Everything works**: tested on PC, and the Quest builds the very same RepoXR code. Report problems with this fork
 > [here](../../issues), not to Dobutsu or DaXcess.
 
-> **Updating:** if you have built an earlier version, a code-only build is enough for qc27 (about 6 minutes; the
-> game's data from your last full build is reused) — see [docs/updating.md](docs/updating.md#updating-to-a-newer-build-of-this-fork).
-
-> **On PC instead of Quest?** The RepoXR side of this port is also a BepInEx mod for the PC game:
-> [crimecock/RepoXR](https://github.com/crimecock/RepoXR) (branch `repo-0.5.0`). Its all-in-one zip plays in VR on
-> Windows (SteamVR, Meta Quest Link, Virtual Desktop), multiplayer included: [install](https://github.com/crimecock/RepoXR#install-on-pc-repo-050--установка-на-пк),
-> [controls on PC](https://github.com/crimecock/RepoXR/blob/repo-0.5.0/docs/controls.md).
+> **Updating:** over qc24 a code-only build is enough for qc27 (about 6 minutes; the game's data from your last full
+> build is reused). Over the earlier public release qc2, make a full build — see [docs/updating.md](docs/updating.md#updating-to-a-newer-build-of-this-fork).
 
 ### Known issues
 
-None right now: everything works on PC, and the Quest builds the same code. Good to know:
+Everything works: tested on PC, and the Quest builds the same code. One small issue: **the language page** (*Settings → Language*) shows only Text to Speech in VR, because the language buttons land outside the menu. The fix is ready and comes with the next build. Good to know:
 
 - **The shop mirror is hidden on the Quest, on purpose**: with single-pass rendering (the Quest's default) both eyes
   would share one reflection. It works with *VR Settings → Rendering → Render Mode* set to Multipass, at a frame rate
