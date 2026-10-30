@@ -42,7 +42,7 @@ public sealed class ProjectStep : BuildStep
         </linker>
         """;
 
-    private const int Parts = 22;
+    private const int Parts = 23;
     private int done;
 
     public override string Id => "project";
@@ -78,13 +78,15 @@ public sealed class ProjectStep : BuildStep
             $"m_EditorVersion: {context.Kit.Manifest.Unity.Version}\n" +
             $"m_EditorVersionWithRevision: {context.Kit.Manifest.Unity.Version} ({context.Kit.Manifest.Unity.Changeset})\n");
         EnableParallelImport(project);
+        // AssetRipper 2.0.0 writes WAVs with zero chunk sizes, which Unity 6 cannot decode
+        await Script(context, ct, "fix_wav_headers.py", project);
 
         // Package DLLs -> real packages, dummy package shaders -> package shaders
         await Script(context, ct, "package_swap.py", project);
         // Unity reserves Assembly-CSharp* for its own compiled scripts
         await Script(context, ct, "rename_game_assemblies.py", project);
         // Assembly-CSharp's global `Version` type shadows System.Version inside the Input System package
-        await Script(context, ct, "embed_package.py", project, "com.unity.inputsystem", "1.14.2");
+        await Script(context, ct, "embed_package.py", project, "com.unity.inputsystem", "1.19.0");
         // The Windows Addressables build that came with the export; the Android one is built from restored groups
         FileOps.DeleteDirectory(Path.Combine(project, "Assets", "StreamingAssets", "aa"));
         FileOps.DeleteFile(Path.Combine(project, "Assets", "StreamingAssets", "aa.meta"));
@@ -100,14 +102,17 @@ public sealed class ProjectStep : BuildStep
         await Script(context, ct, "generate_shaders.py", project, workspace.ShaderStates);
         // The UI render target is RGBA32F, which Adreno cannot blend into
         await Script(context, ct, "fix_render_textures.py", project);
+        // TMP's dynamic fonts render new glyphs into their atlas at runtime; Android's default ASTC compression of the
+        // exported atlases turned those glyphs (Steam names, the news text) into stripes
+        await Script(context, ct, "fix_font_atlases.py", project);
         var editorDir = Path.Combine(project, "Assets", "RepoQuest", "Editor");
         CopyTree(Path.Combine(context.Kit.UnityTools, "Editor"), editorDir);
 
         // make-quest-vr.sh: XR packages, package sources with RepoXR's package patches and Post Processing's fixes
         await Script(context, ct, "xr_packages.py", project);
-        await Script(context, ct, "embed_package.py", project, "com.unity.inputsystem", "1.14.2");
-        await Script(context, ct, "embed_package.py", project, "com.unity.ugui", "1.0.0", "--builtin", unity.Root);
-        await Script(context, ct, "embed_package.py", project, "com.unity.postprocessing", "3.5.0");
+        await Script(context, ct, "embed_package.py", project, "com.unity.inputsystem", "1.19.0");
+        await Script(context, ct, "embed_package.py", project, "com.unity.ugui", "2.0.0", "--builtin", unity.Root);
+        await Script(context, ct, "embed_package.py", project, "com.unity.postprocessing", "3.5.4");
         await Script(context, ct, "patch_packages.py", project);
 
         await ApplyQuestRuntimeAsync(context, bepInExCore, ct);

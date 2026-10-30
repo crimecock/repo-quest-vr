@@ -219,7 +219,9 @@ namespace RepoXR.Standalone
         /// </summary>
         private MenuButton AddSteamButton(MenuPageMain main)
         {
-            var source = main.transform.Find("Buttons/Menu Button - Settings");
+            // 0.4: Buttons/...; 0.5.0 put the left column under LeftTransform/ (the news buttons are on the right)
+            var source = main.transform.Find("Buttons/Menu Button - Settings") ??
+                         main.transform.Find("LeftTransform/Buttons/Menu Button - Settings");
             if (!source)
             {
                 Debug.LogWarning("[RepoXR.Standalone] Steam: no Settings button in the main menu to copy");
@@ -240,7 +242,9 @@ namespace RepoXR.Standalone
 
             var button = copy.GetComponent<MenuButton>();
             var rect = (RectTransform)copy.transform;
-            rect.anchoredPosition = new Vector2(190f, 0f);
+            // Right of Quit game, on its row (0.4.4's Quit game sat at x 0, the Steam button at 190)
+            var quit = source.parent.Find("Menu Button - Quit game") as RectTransform;
+            rect.anchoredPosition = quit ? quit.anchoredPosition + new Vector2(190f, 0f) : new Vector2(190f, 0f);
             // ResizeToText (on every label change) puts the button back to where and how big it was at Awake
             button.originalButtonPosition = rect.localPosition;
             button.originalFontSize = 20f;

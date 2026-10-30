@@ -98,6 +98,11 @@ namespace RepoQuest.Editor
                 return settings.DefaultGroup;
 
             var name = bundle.Replace(".bundle", "").Replace("_assets_all", "");
+            // R.E.P.O. 0.5.0 packs its cosmetics group by label, one bundle per label
+            // ("cosmetics_assets_cosmetics-arms"); one group per label keeps them as separate bundles
+            var byLabel = name.IndexOf("_assets_", StringComparison.Ordinal);
+            if (byLabel >= 0)
+                name = name.Substring(byLabel + "_assets_".Length);
             var group = settings.FindGroup(name);
             if (group != null)
                 return group;

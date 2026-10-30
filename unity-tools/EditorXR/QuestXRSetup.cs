@@ -64,9 +64,11 @@ namespace RepoQuest.Editor
             // as Vector2Control unless this is defined: without it no Quest controller device can be created. RepoXR's
             // bindings also use stick sub-controls (primary2DAxis/up)
             const string stickDefine = "USE_STICK_CONTROL_THUMBSTICKS";
-            var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android);
+            // The BuildTargetGroup overloads are obsolete in Unity 6
+            var android = UnityEditor.Build.NamedBuildTarget.Android;
+            var defines = PlayerSettings.GetScriptingDefineSymbols(android);
             if (!defines.Split(';').Contains(stickDefine))
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Android,
+                PlayerSettings.SetScriptingDefineSymbols(android,
                     string.IsNullOrEmpty(defines) ? stickDefine : defines + ";" + stickDefine);
 
             EditorUtility.SetDirty(perTarget);

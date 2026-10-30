@@ -139,10 +139,25 @@ PATCHES = [
 ]
 
 
+def locate(packages: Path, relative: str, anchor: str) -> Path:
+    """The file to patch. Unity 6's uGUI 2.0 moved its sources (Runtime/UI/Core/Button.cs is now
+    Runtime/UGUI/UI/Core/Button.cs, next to TextMeshPro); when the path is gone, the one file of that name in the package
+    that has the anchor"""
+    path = packages / relative
+    if path.exists():
+        return path
+    package = packages / relative.split("/")[0]
+    matches = [p for p in sorted(package.rglob(Path(relative).name)) if anchor in p.read_text(errors="ignore")]
+    if len(matches) == 1:
+        print(f"{relative} is {matches[0].relative_to(packages)} in this version")
+        return matches[0]
+    return path
+
+
 def main() -> int:
     packages = Path(sys.argv[1]) / "Packages"
     for relative, anchor, replacement in PATCHES:
-        path = packages / relative
+        path = locate(packages, relative, anchor)
         text = path.read_text()
         if replacement in text:
             print(f"already patched: {relative}")

@@ -14,6 +14,8 @@ public sealed partial class UnityBuildStep : BuildStep
     /// M-series Mac: ~35 minutes for the first build, ~20 for later ones)</summary>
     private const double FirstBuildMinutes = 35;
     private const double DefaultBuildMinutes = 20;
+    /// <summary>IL2CPP and Gradle only (estimate: the full build's 'Postprocess built player' plus Prepare)</summary>
+    private const double ScriptsOnlyMinutes = 10;
 
     public override string Id => "unity";
 
@@ -66,11 +68,12 @@ public sealed partial class UnityBuildStep : BuildStep
             "-versionCode", options.VersionCode.ToString(),
             .. options.Development ? new[] { "-developmentBuild" } : [],
             .. options.Profiling ? new[] { "-profiling" } : [],
+            .. options.ScriptsOnly ? new[] { "-scriptsOnly" } : [],
             "-logFile", buildLog,
         ];
         var started = DateTime.UtcNow;
-        await RunUnityAsync(context, unity, build, buildLog,
-            new BuildProgress(this, context, ExpectedBuildTime(context.State, freshLibrary)), ct);
+        var expected = options.ScriptsOnly ? TimeSpan.FromMinutes(ScriptsOnlyMinutes) : ExpectedBuildTime(context.State, freshLibrary);
+        await RunUnityAsync(context, unity, build, buildLog, new BuildProgress(this, context, expected), ct);
         var log = File.ReadAllText(buildLog);
         foreach (var line in log.Split('\n').Select(WithoutTimestamp).Where(l => l.StartsWith("[QuestBuild]", StringComparison.Ordinal)))
             Log.Info(line.TrimEnd());
@@ -78,8 +81,8 @@ public sealed partial class UnityBuildStep : BuildStep
             throw Failure(buildLog, "The APK build failed");
 
         var state = context.State;
-        // A first build (every shader compiled) says little about the next ones
-        if (!freshLibrary)
+        // A first build (every shader compiled) says little about the next ones, a code-only one even less
+        if (!freshLibrary && !options.ScriptsOnly)
         {
             state.UnityBuildDurations.Add((int)(DateTime.UtcNow - started).TotalSeconds);
             if (state.UnityBuildDurations.Count > 10)

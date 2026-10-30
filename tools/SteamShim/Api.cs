@@ -160,6 +160,49 @@ namespace Steamworks
     {
         public static bool IsOverlayEnabled => false;
         public static DateTime SteamServerTime => DateTime.UtcNow;
+
+        // R.E.P.O. 0.5.0 opens Steam's gamepad keyboard (Steam Deck / Big Picture) for text fields.
+        // There is no Steam client on Quest: the call reports that no keyboard came up, as Steam does outside Big Picture,
+        // and the game keeps its own input (RepoXR's keyboard)
+        public static event Action<bool> OnGamepadTextInputDismissed;
+
+        public static bool ShowGamepadTextInput(GamepadTextInputMode inputMode, GamepadTextInputLineMode lineInputMode,
+            string description, int maxChars, string existingText = "") => false;
+
+        public static string GetEnteredGamepadText() => "";
+
+        internal static void RaiseGamepadTextInputDismissed(bool submitted) =>
+            Dispatch.Raise(OnGamepadTextInputDismissed, submitted);
+    }
+
+    public enum GamepadTextInputMode
+    {
+        Normal = 0,
+        Password = 1,
+    }
+
+    public enum GamepadTextInputLineMode
+    {
+        SingleLine = 0,
+        MultipleLines = 1,
+    }
+
+    /// <summary>
+    /// R.E.P.O. 0.5.0 puts the Steam branch into its lobby data ("BuildBranch") and compares it when
+    /// joining. Steam answers no beta name on the default branch (Facepunch returns null), which is what the Quest build
+    /// is: the PC players it plays with are on the default branch too
+    /// </summary>
+    public static class SteamApps
+    {
+        public static string CurrentBetaName => null;
+        public static bool IsAppInstalled(AppId appid) => false;
+        public static string AppInstallDir(AppId appid = default) => null;
+    }
+
+    /// <summary>Achievements are not reported from the Quest (0.5.0 shows achievement progress)</summary>
+    public static class SteamUserStats
+    {
+        public static bool IndicateAchievementProgress(string achName, int curProg, int maxProg) => false;
     }
 
     public static class SteamFriends

@@ -49,7 +49,8 @@ def main():
 
     renamed = unresolved = 0
     for path, pptr in entries:
-        if path in known:
+        # R.E.P.O. 0.5.0 lists one path with a null reference ("semitentacle shading"): nothing to name
+        if path in known or pptr.m_PathID == 0:
             continue
         target_obj = pptr.deref()
         if target_obj.type.name != "GameObject":

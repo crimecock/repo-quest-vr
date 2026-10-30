@@ -33,6 +33,7 @@ internal static class Commands
         Console.WriteLine("usage: QuestBuilder.Cli build [--dev] [--workspace <dir>] [--game <dir>] [--kit <dir>] [--unity <dir>]");
         Console.WriteLine("                              [--apk-name <name>] [--development] [--profiling] [--force] [--only <steps>]");
         Console.WriteLine("                              [--headset quest|pico]");
+        Console.WriteLine("       QuestBuilder.Cli check [--quick] [--workspace <dir>] [--game <dir>] [--kit <dir>] [--unity <dir>]");
         Console.WriteLine("       QuestBuilder.Cli locate");
         return 64;
     }
@@ -62,6 +63,7 @@ internal static class Commands
             ApkName = options.Get("apk-name") ?? (options.Has("dev") ? "repo-quest-vr" : "REPO-Quest"),
             Development = options.Has("development"),
             Profiling = options.Has("profiling"),
+            ScriptsOnly = options.Has("scripts-only"),
             Force = options.Has("force"),
             Headset = BuildOptions.ParseHeadset(options.Get("headset")),
             Only = options.Get("only")?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToHashSet(),
@@ -97,13 +99,13 @@ internal static class Commands
     {
         foreach (var candidate in GameLocator.Candidates())
             Console.WriteLine($"{(GameInstall.IsValid(candidate) ? "game  " : "      ")} {candidate}");
-        var unity = UnityInstall.Find("2022.3.62f3");
+        var unity = UnityInstall.Find("6000.3.17f1");
         Console.WriteLine($"unity  {unity?.Root ?? "(not found)"}{(unity is { HasAndroid: true } ? " +android" : "")}");
         Console.WriteLine($"hub    {UnityHub.Executable() ?? "(not found)"}");
         return 0;
     }
 
-    private static (Workspace, Kit, string?, string?) Resolve(Options options)
+    internal static (Workspace, Kit, string?, string?) Resolve(Options options)
     {
         string? root = null;
         if (options.Has("dev"))

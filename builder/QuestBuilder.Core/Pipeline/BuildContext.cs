@@ -14,6 +14,12 @@ public sealed class BuildOptions
     public bool Development { get; init; }
     /// <summary>Profileable release build with IL2CPP symbols (-profiling)</summary>
     public bool Profiling { get; init; }
+    /// <summary>
+    /// Rebuild only the code into the last APK (-scriptsOnly: Unity's BuildOptions.BuildScriptsOnly, no Addressables
+    /// content build). For changes to the baked assemblies, RepoXR or the port's scripts, not to assets: packing the
+    /// game's data is two thirds of a build. Unity falls back to a full build when it has no earlier one to reuse
+    /// </summary>
+    public bool ScriptsOnly { get; init; }
     public string VersionName { get; init; } = Platform.BuilderVersion;
     public int VersionCode { get; init; } = VersionCodeOf(Platform.BuilderVersion);
     /// <summary>Run every step even if its inputs did not change</summary>
