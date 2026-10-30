@@ -6,7 +6,7 @@ Releases of this fork. Each release is a kit (`kit` branch) plus the matching co
 download the kit of their version. The original project's history is in
 [Dobutsu/repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr/releases).
 
-## Unreleased
+## 1.0.7-qc27
 
 Kit **1.0.7-qc27** is on the `kit` branch, and `scripts/build-mac.sh` and `scripts/build-windows.ps1` download it
 (they were still on qc2); qc3 to qc26 were test builds on the headset.

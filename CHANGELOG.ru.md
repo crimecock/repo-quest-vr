@@ -6,7 +6,7 @@
 сборки скачивают набор своей версии. История исходного проекта — в
 [Dobutsu/repo-quest-vr](https://github.com/Dobutsu/repo-quest-vr/releases).
 
-## Готовится
+## 1.0.7-qc27
 
 Набор **1.0.7-qc27** лежит в ветке `kit`, и его скачивают `scripts/build-mac.sh` и `scripts/build-windows.ps1`
 (они всё ещё были на qc2); qc3–qc26 — тестовые сборки в шлеме.
